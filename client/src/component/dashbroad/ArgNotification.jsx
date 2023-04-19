@@ -21,27 +21,31 @@ const ArgNotification = () => {
       bgcolor={"#fff"}
       paddingLeft={2}
       paddingTop={2}
-      paddingBottom={10}
-      gap={7}
+      paddingBottom={1}
+      gap={5}
       alignItems={"flex-start"}
-      maxHeight={"400px"}
-      sx={{
-        overflowY: "scroll",
-        "&::-webkit-scrollbar": {
-          display: "none",
-        },
-      }}
     >
       <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
         Thông báo
       </Typography>
-      {data.data.map((item) => (
-        <ArgNotiMess
-          feed={item.feed}
-          updatedAt={item.updatedAt}
-          content={item.content}
-        />
-      ))}
+      <Box
+        width={"100%"}
+        maxHeight={"300px"}
+        sx={{
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        {data.data.map((item) => (
+          <ArgNotiMess
+            feed={item.feed}
+            updatedAt={item.updatedAt}
+            content={item.content}
+          />
+        ))}
+      </Box>
     </Stack>
   );
 };

@@ -7,6 +7,9 @@ import ArgHumiBox from "../../component/dashbroad/ArgHumiBox";
 import ArgDeviceBox from "../../component/dashbroad/ArgDeviceBox";
 import ArgNotification from "../../component/dashbroad/ArgNotification";
 import ArgUserLog from "../../component/dashbroad/ArgUserLog";
+import MyResponsiveLine, {
+  data,
+} from "../../component/dashbroad/MyResponsiveLine ";
 
 const DashBroad = () => {
   const dispatch = useDispatch();
@@ -22,7 +25,20 @@ const DashBroad = () => {
         <ArgDeviceBox />
         <ArgDeviceBox />
       </Stack>
-      <Stack direction={"row"} justifyContent={"space-between"} mt={"100px"}>
+      <Box
+        mt={5}
+        width={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        bgcolor={"#FFF"}
+        borderRadius={"10.5417px"}
+      >
+        <Box width="90%" height={"500px"}>
+          <MyResponsiveLine data={data} />
+        </Box>
+      </Box>
+      <Stack direction={"row"} justifyContent={"space-between"} mt={"50px"}>
         <ArgNotification />
         <ArgUserLog />
       </Stack>

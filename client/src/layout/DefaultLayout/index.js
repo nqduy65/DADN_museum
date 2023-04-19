@@ -6,7 +6,11 @@ const DefaultLayout = ({ children }) => {
     <div>
       <Box display="flex" height="100vh" backgroundColor="#F5F5F5">
         <Sidebar />
-        <Box width={"100%"} backgroundColor="#F5F5F5">
+        <Box
+          width={"100%"}
+          backgroundColor="#F5F5F5"
+          sx={{ overflowY: "scroll" }}
+        >
           <Box
             margin={"25px 71px 17.05px 33.62px "}
             width={"calc(100% - 33.62px -17.05px)"}

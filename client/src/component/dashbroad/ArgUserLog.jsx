@@ -26,15 +26,8 @@ const ArgUserLog = () => {
       paddingRight={5}
       paddingTop={2}
       paddingBottom={10}
-      gap={7}
+      gap={3}
       alignItems={"flex-start"}
-      maxHeight={"400px"}
-      sx={{
-        overflowY: "scroll",
-        "&::-webkit-scrollbar": {
-          display: "none",
-        },
-      }}
     >
       <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
         Truy cập gần đây
@@ -63,13 +56,24 @@ const ArgUserLog = () => {
           Thời gian
         </Typography>
       </Box>
-      {data.data.map((item) => (
-        <ArgLogBox
-          name={item.name}
-          role={item.role}
-          updatedAt={item.updatedAt}
-        />
-      ))}
+      <Box
+        width={"100%"}
+        maxHeight={"300px"}
+        sx={{
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        {data.data.map((item) => (
+          <ArgLogBox
+            name={item.name}
+            role={item.role}
+            updatedAt={item.updatedAt}
+          />
+        ))}
+      </Box>
     </Stack>
   );
 };
