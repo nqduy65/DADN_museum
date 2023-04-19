@@ -7,14 +7,13 @@ import { selectAvgHumi, selectAvgTemp } from "../../pages/DashBroad/selectors";
 const ArgHumiBox = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("dispatching getAvgTempThunk");
     dispatch(getAvgHumiThunk());
   }, [dispatch]);
   const data = useSelector(selectAvgHumi);
   console.log(data);
   return (
     <Stack
-      width={"264.97px"}
+      width={"20%"}
       height={"104.36px"}
       border={"1.05417px solid #E0E0E0"}
       borderRadius={"10px"}
@@ -47,7 +46,7 @@ const ArgHumiBox = () => {
           lineHeight={"27px"}
           color="rgba(96, 64, 239, 1)"
         >
-          {data.data[0] >= 0 && "+"}
+          {data.data[1] >= 0 && "+"}
           {data.data[1]} %
         </Typography>
         <Typography

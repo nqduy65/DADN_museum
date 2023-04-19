@@ -6,7 +6,11 @@ import { selectFan } from "../../../pages/Manage/selectors";
 
 import { io } from "socket.io-client";
 import { useEffect } from "react";
-import dmanageSlice, { getFan, setFan } from "../../../pages/Manage/dmanage";
+import dmanageSlice, {
+  getFan,
+  setAuto,
+  setFan,
+} from "../../../pages/Manage/dmanage";
 import { useSnackbar } from "notistack";
 
 const FanBox = () => {
@@ -19,6 +23,14 @@ const FanBox = () => {
       console.log("vo nay", fan);
       toast(`Quạt đã thay đổi mức ${fan}`);
       dispatch(dmanageSlice.actions.changeFan(fan));
+    });
+    socket.on("autoUpdate", ({ auto }) => {
+      console.log("vo nay", auto);
+      if (auto === "1") {
+        toast(`Quạt đã chuyển sang auto`, "info");
+      } else {
+        toast(`Quạt đã tắt auto`, "info");
+      }
     });
   }, []);
 
@@ -92,7 +104,11 @@ const FanBox = () => {
           >
             Tự động
           </Typography>
-          <AntSwitch />
+          <AntSwitch
+            onChange={(event) => {
+              dispatch(setAuto(event.target.checked));
+            }}
+          />
         </Box>
         <Stack>
           <Typography fontSize={"14px"} lineHeight={"21px"} gap={1}>

@@ -38,6 +38,7 @@ const listenEvents = (io) => {
         } else  */
     if (topic.endsWith("ttq-fan")) {
       saveFanDb("Phòng 1", data);
+
       if (data == 0) {
         mess = "Fan was turned off";
       } else if (data == 1) {

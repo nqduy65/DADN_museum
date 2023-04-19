@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import UserLog from "../models/userLogModel.js";
 import genToken from "../utils/genToken.js";
 
 export const register = async (req, res, next) => {
@@ -39,6 +40,20 @@ export const login = async (req, res, next) => {
   }
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
+    // create a new UserLog object
+    const newUserLog = new UserLog({
+      name: user.name,
+      role: "Giám sát viên",
+    });
+
+    newUserLog.save((err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("UserLog saved to database");
+      }
+    });
+
     res.status(200).json({
       _id: user._id,
       name: user.name,

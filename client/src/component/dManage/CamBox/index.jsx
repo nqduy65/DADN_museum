@@ -1,6 +1,8 @@
 import { Box, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
+import Camera from "../Camera";
+import { useRef, useState } from "react";
 export const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
   height: 16,
@@ -46,6 +48,26 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const CamBox = () => {
+  const videoRef = useRef(null);
+  const [isCameraOn, setIsCameraOn] = useState(false);
+
+  const toggleCamera = () => {
+    if (isCameraOn) {
+      videoRef.current.pause();
+      setIsCameraOn(false);
+    } else {
+      const constraints = { video: true };
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((stream) => {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play();
+          setIsCameraOn(true);
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
   return (
     <Stack
       width={"368px"}
@@ -63,17 +85,31 @@ const CamBox = () => {
         <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
           Camera 1
         </Typography>
-        <AntSwitch sx={{ justifySelf: "flex-end" }} />
+        <AntSwitch sx={{ justifySelf: "flex-end" }} onClick={toggleCamera} />
       </Box>
       <Box
-        width={"100%"}
-        height={"285px"}
+        // width={"100%"}
+        height={"200px"}
         sx={{
           backgroundImage:
             "linear-gradient(208.53deg, rgba(94, 68, 255, 0.2) 0%, rgba(94, 68, 255, 0.2) 0.01%, rgba(184, 91, 174, 0.2) 60.61%, rgba(255, 110, 110, 0.2) 106.43%)",
         }}
         borderRadius={"25px"}
-      ></Box>
+      >
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"100%"}
+          height={"100%"}
+        >
+          <video
+            ref={videoRef}
+            className="camera-video"
+            style={{ width: "95%", height: "90%", borderRadius: "25px" }}
+          />
+        </Box>
+      </Box>
     </Stack>
   );
 };

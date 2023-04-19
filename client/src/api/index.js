@@ -28,6 +28,10 @@ export const setFan = (value) => API.post("api/data/setFan", value);
 
 export const getAvgTemp = () => API.get("api/data/getavgtemp");
 export const getAvgHumi = () => API.get("api/data/getavghumi");
+export const getAvgDevice = () => API.get("api/data/getavgdevice");
+export const getNotifications = () => API.get("api/data/getnotifications");
+export const getUserLog = () => API.get("api/data/getuserlog");
+export const setAutoFan = (value) => API.post("api/data/setAutoFan", value);
 // export const getTemperature = () => API.get("/api/data/lasttemperature");
 
 // export const getHumidity = () => API.get("/api/data/lasthumidity");

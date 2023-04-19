@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as API from "../../api";
 
 const initialState = {
-  fan: { status: "", data: { room: "", name: "", value: "0", auto: "" } },
+  fan: { status: "", data: { room: "", name: "", value: "0", auto: "off" } },
 };
 const dmanageSlice = createSlice({
   name: "dmanage",
@@ -36,5 +36,11 @@ export const getFan = createAsyncThunk("dmanage/getFan", async () => {
 });
 export const setFan = createAsyncThunk("dmanage/setFan", async (value) => {
   const res = await API.setFan({ value });
+  return res;
+});
+export const setAuto = createAsyncThunk("dmanage/setAuto", async (value) => {
+  let res;
+  if (value) res = await API.setAutoFan({ value: "1" });
+  else res = await API.setAutoFan({ value: "0" });
   return res;
 });

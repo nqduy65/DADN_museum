@@ -5,9 +5,10 @@ import Temp from "../models/tempModel.js";
 import Humi from "../models/humiModel.js";
 import Fan from "../models/fanModel.js";
 import Camera from "../models/cameraModel.js";
+import UserLog from "../models/userLogModel.js";
 import { publishData } from "../utils/mqttHelper.js";
 import { adaRequest } from "../utils/axios.js";
-
+import moment from "moment";
 // export const lastTemperature = async (req, res, next) => {
 //   adaRequest
 //     .get("/feeds/temperature/data/last")
@@ -120,6 +121,24 @@ import { adaRequest } from "../utils/axios.js";
 //     });
 // };
 
+export const setAutoFan = async (req, res, next) => {
+  const { value } = req.body;
+  console.log(value);
+  if (!value) {
+    res.status(400);
+    return next(new Error("Value is not sent!"));
+  } else {
+    let fan = parseFloat(value);
+    if (fan >= 0 && fan <= 1) {
+      publishData("ttq-autofan", fan, (result) =>
+        handleReturn(result, res, next)
+      );
+    } else {
+      res.status(400);
+      return next(new Error("Value is invalid"));
+    }
+  }
+};
 const handleReturn = async (result, res, next) => {
   if (result) {
     res.status(201).json({
@@ -468,14 +487,16 @@ export const getAvgTemp = async (req, res, next) => {
       },
     },
   ]);
-  const avgTempTodayValue = avgTempToday[0]?.avgData;
+  const avgTempTodayValue = parseFloat(avgTempToday[0]?.avgData.toFixed(1));
   let avgTempYesterdayValue = avgTempYesterday[0]?.avgData;
   if (avgTempYesterdayValue === undefined) avgTempYesterdayValue = 24;
   // So sánh 2 giá trị trung bình
-  const percentChange = (
-    ((avgTempTodayValue - avgTempYesterdayValue) / avgTempYesterdayValue) *
-    100
-  ).toFixed(1);
+  const percentChange = parseFloat(
+    (
+      ((avgTempTodayValue - avgTempYesterdayValue) / avgTempYesterdayValue) *
+      100
+    ).toFixed(1)
+  );
 
   console.log(avgTempTodayValue, avgTempYesterdayValue, percentChange);
   res.status(200).json({ avgTempTodayValue, percentChange });
@@ -555,7 +576,7 @@ export const getAvgHumi = async (req, res, next) => {
       },
     },
   ]);
-  const avgHumiTodayValue = avgHumiToday[0]?.avgData;
+  const avgHumiTodayValue = parseFloat(avgHumiToday[0]?.avgData.toFixed(1));
   let avgHumiYesterdayValue = avgHumiYesterday[0]?.avgData;
   if (avgHumiYesterdayValue === undefined) avgHumiYesterdayValue = 24;
   // So sánh 2 giá trị trung bình
@@ -569,6 +590,37 @@ export const getAvgHumi = async (req, res, next) => {
 };
 export const getAvgDevice = async (req, res, next) => {
   res.status(200).json({ totalDevice: 5, change: 0 });
+};
+export const getNotifications = async (req, res, next) => {
+  const notifications = await Notification.find()
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .exec();
+
+  // Format the updatedAt field of each notification to a custom date format
+  const formattedNotifications = notifications.map((notification) => {
+    const updatedAt = moment(notification.updatedAt).format(
+      "hh:mm A, DD/MM/YYYY"
+    );
+    return { ...notification._doc, updatedAt };
+  });
+
+  res.status(200).json({ message: "successful", data: formattedNotifications });
+};
+
+export const getUserLog = async (req, res, next) => {
+  const userlogs = await UserLog.find()
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .exec();
+
+  // Format the updatedAt field of each userlog to a date and time format
+  const formattedUserLogs = userlogs.map((userlog) => {
+    const updatedAt = moment(userlog.updatedAt).format("DD/MM/YYYY HH:mm");
+    return { ...userlog._doc, updatedAt };
+  });
+
+  res.status(200).json({ message: "successful", data: formattedUserLogs });
 };
 // export const getNotifications = async (req, res, next) => {
 //   let limit = req.query["limit"] ? req.query["limit"] : 24;

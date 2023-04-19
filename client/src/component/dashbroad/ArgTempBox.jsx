@@ -14,7 +14,7 @@ const ArgTempBox = () => {
   console.log(data);
   return (
     <Stack
-      width={"264.97px"}
+      width={"20%"}
       height={"104.36px"}
       border={"1.05417px solid #E0E0E0"}
       borderRadius={"10px"}
@@ -48,7 +48,7 @@ const ArgTempBox = () => {
           lineHeight={"27px"}
           color="rgba(147, 15, 252, 1)"
         >
-          {data.data[0] >= 0 && "+"}
+          {data.data[1] >= 0 && "+"}
           {data.data[1]} %
         </Typography>
         <Typography
