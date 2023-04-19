@@ -45,7 +45,7 @@ const ioServer = new Server(server, {
 });
 
 updateRealTime(ioServer);
-// listenEvents(ioServer);
+listenEvents(ioServer);
 ioServer.listen(process.env.SOCKET_PORT);
 
 app.listen(PORT, () => {
@@ -56,4 +56,4 @@ app.listen(PORT, () => {
 
 route(app);
 app.use(notFound);
-// app.use(errorHandler);
+app.use(errorHandler);

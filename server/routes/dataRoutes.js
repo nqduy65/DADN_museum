@@ -4,7 +4,13 @@ import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/lasttemperature", verifyToken, dataController.lastTemperature);
+router.get("/getroominfos", verifyToken, dataController.getRoomInfos);
+router.get("/getroomdevices", verifyToken, dataController.getRoomDevices);
+router.post("/getdevicedetail", verifyToken, dataController.getDeviceDetail);
+router.get("/getFan", verifyToken, dataController.getFan);
+router.get("/getavgtemp", verifyToken, dataController.getAvgTemp);
+router.get("/getavghumi", verifyToken, dataController.getAvgHumi);
+router.get("/getavgdevice", verifyToken, dataController.getAvgDevice);
 // router.get("/lasthumidity", verifyToken, dataController.lastHumidity);
 // router.get("/lastsoildmoisture", verifyToken, dataController.lastSoildMoisture);
 // router.get("/lastfan", verifyToken, dataController.lastFan);
@@ -23,7 +29,7 @@ router.get("/lasttemperature", verifyToken, dataController.lastTemperature);
 //   dataController.getDaySoildMoistures
 // );
 
-// router.post("/setfan", verifyToken, dataController.setFan);
+router.post("/setfan", verifyToken, dataController.setFan);
 // router.post("/setmode", verifyToken, dataController.setMode);
 // router.post("/setlight", verifyToken, dataController.setLight);
 // router.post("/setpump", verifyToken, dataController.setPump);

@@ -1,43 +1,10 @@
 import mqtt from "mqtt";
-import Notification from "../models/notificationModel.js";
-import Humi from "../models/humiModel.js";
-import Fan from "../models/fanModel.js";
-// import Temp from "../models/tempModel.js";
-
-const saveNotiOnDb = async (feed, content, createdAt) => {
-  let noti = new Notification({
-    feed,
-    content,
-    createdAt,
-  });
-  await noti
-    .save()
-    .then((res) => {
-      console.log(`${res.content} and saved into database`);
-      return true;
-    })
-    .catch((e) => {
-      console.log(`Error ${e}`);
-    });
-  return false;
-};
-
-const saveFanDb = async (feed, content, createdAt) => {
-  let fan = new Fan({
-    room,
-    data,
-  });
-  await fan
-    .save()
-    .then((res) => {
-      console.log(`${res.content} and saved into database`);
-      return true;
-    })
-    .catch((e) => {
-      console.log(`Error ${e}`);
-    });
-  return false;
-};
+import {
+  saveNotiOnDb,
+  saveFanDb,
+  saveTempDb,
+  saveHumiDb,
+} from "./modelSaver.js";
 
 const listenEvents = (io) => {
   const username = `${process.env.ADAFRUIT_USERNAME}`;
@@ -48,16 +15,17 @@ const listenEvents = (io) => {
     password: key,
   });
   client.on("connect", () => {
+    console.log("<Notification Processes> Client listen connect Events");
     /* client.subscribe(`${username}/feeds/temperature`);
     client.subscribe(`${username}/feeds/humidity`);
     client.subscribe(`${username}/feeds/soild-moisture`); */
     client.subscribe(`${username}/feeds/ttq-fan`);
-    client.subscribe(`${username}/feeds/mode`);
-    client.subscribe(`${username}/feeds/pump`);
-    client.subscribe(`${username}/feeds/light`);
+    client.subscribe(`${username}/feeds/ttq-humi`);
+    client.subscribe(`${username}/feeds/ttq-temp`);
   });
+
   client.on("message", (topic, message) => {
-    console.log(topic, message);
+    console.log(topic, JSON.parse(message.toString()));
     const data = parseFloat(message.toString());
     const createAt = new Date().toISOString();
     let mess = "";
@@ -69,7 +37,7 @@ const listenEvents = (io) => {
 
         } else  */
     if (topic.endsWith("ttq-fan")) {
-      saveFanDb("phong 1", data);
+      saveFanDb("Phòng 1", data);
       if (data == 0) {
         mess = "Fan was turned off";
       } else if (data == 1) {
@@ -83,7 +51,8 @@ const listenEvents = (io) => {
       }
       saveNotiOnDb("fan", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
-    } else if (topic.endsWith("mode")) {
+    } else if (topic.endsWith("ttq-temp")) {
+      saveTempDb("Phòng 1", data);
       if (data == 0) {
         mess = "Mode was set to manual";
       } else if (data == 1) {
@@ -93,7 +62,8 @@ const listenEvents = (io) => {
       }
       saveNotiOnDb("mode", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
-    } else if (topic.endsWith("pump")) {
+    } else if (topic.endsWith("ttq-humi")) {
+      saveHumiDb("Phòng 1", data);
       if (data == 0) {
         mess = "Pump was turned off";
       } else if (data == 1) {

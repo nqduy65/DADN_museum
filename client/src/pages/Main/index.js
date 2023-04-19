@@ -9,13 +9,19 @@ import DetailSensor from "../../component/DetailSensor";
 import DeviceList from "../../component/DeviceList";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrRoom, selectRoomInfos } from "./selectors";
-import mainSlice from "./mainSlice";
+import mainSlice, { updateDevices, updateRooms } from "./mainSlice";
+import { useEffect } from "react";
 const Main = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    // eslint-disable-next-line
+    dispatch(updateRooms());
+  }, [dispatch]);
   const currRoom = useSelector(selectCurrRoom);
   const roomInfos = useSelector(selectRoomInfos);
   const handleChangeRoom = (roomName) => {
     dispatch(mainSlice.actions.changeRoom(roomName));
+    dispatch(updateDevices(roomName));
   };
   console.log(currRoom);
   const settings = {
@@ -110,7 +116,7 @@ const Main = () => {
         <Box
           marginTop={"27px"}
           width={"100%"}
-          height="570px"
+          height="600px"
           backgroundColor="#FFF"
           borderRadius={"25px"}
         >

@@ -1,29 +1,27 @@
 // import { connect } from "mqtt"  // import connect from mqtt
 // let client = connect('mqtt://test.mosquitto.org')
 import mqtt from "mqtt";
+import Fan from "../models/fanModel.js";
 // const username = "otaku2k22";
 // const key = `aio_etPU89ndBbkDG4kKsGjSkjB3yY49`;
 // const host = "mqtt://test.mosquitto.org";
 const updateRealTime = (io) => {
+  const username = `${process.env.ADAFRUIT_USERNAME}`;
+  const key = `${process.env.ADAFRUIT_KEY}`;
+  const host = "mqtt://io.adafruit.com";
   const type = "feeds";
-  const host = "io.adafruit.com";
-  const port = 8883;
-  const username = "Relax71";
-  const key = `aio_HUgU11yOJs4Y0vM9UvgejKoaiXGg`;
   const id_temp = "ttq-temp";
   const id_humi = "ttq-humi";
   const id_fan = "ttq-fan";
-  const client = mqtt.connect({
-    host: host,
-    port: port,
-    protocol: parseInt(port) === 8883 ? "mqtts" : "mqtt",
+  const client = mqtt.connect(host, {
     username: username,
     password: key,
-    connectTimeout: 60 * 1000,
-    keepalive: 3600,
   });
   client.on("connect", () => {
-    console.log("Adafruit connected");
+    console.log("<Update real Time> Update> Client listen connect Events");
+    /* client.subscribe(`${username}/feeds/temperature`);
+    client.subscribe(`${username}/feeds/humidity`);
+    client.subscribe(`${username}/feeds/soild-moisture`); */
     client.subscribe(`${username}/${type}/${id_temp}/json`);
     client.subscribe(`${username}/${type}/${id_humi}/json`);
     client.subscribe(`${username}/${type}/${id_fan}/json`);
@@ -46,6 +44,11 @@ const updateRealTime = (io) => {
     return res.substring(0, res.search("GMT"));
   }
   client.on("message", function (topic, message) {
+    console.log(
+      "<Update real Time> Update>",
+      topic,
+      JSON.parse(message.toString())
+    );
     var createAt = modifyTime(JSON.parse(message.toString()).data.created_at);
     var data = JSON.parse(message.toString()).last_value;
     if (topic.search("ttq-temp") != -1) {
@@ -54,12 +57,15 @@ const updateRealTime = (io) => {
       io.emit("temperatureUpdate", { temperature: data, date: createAt });
     } else if (topic.search("ttq-humi") != -1) {
       io.emit("humidityUpdate", { humidity: data, date: createAt });
+
       console.log(`humidityUpdate: ${data}%`);
       console.log(`Create at: ${createAt}`);
     } else if (topic.search("ttq-fan") != -1) {
       io.emit("fanUpdate", { fan: data });
       console.log(`FanLevel: ${data}`);
       console.log(`Create at: ${createAt}`);
+      // const newFan = new Fan({ room: "phong 1", data: data });
+      // newFan.save();
     }
   });
   client.on("error", (error) => {

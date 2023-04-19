@@ -14,5 +14,5 @@ const TempSchema = mongoose.Schema(
   }
 );
 
-const Temp = mongoose.model("Temp", TempSchema);
-export default Temp;
+const Camera = mongoose.model("Camera", TempSchema);
+export default Camera;

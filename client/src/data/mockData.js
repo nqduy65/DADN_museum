@@ -1,11 +1,10 @@
 export const mockDataTeam = [
   {
     id: 1,
-    name: "Phòng 1",
-    email: "sensor_room_1",
-    age: 35,
-    phone: "Active",
-    access: "55",
+    room: "Phòng 1",
+    device: "sensor_room_1",
+    value: "Active",
+    time: "55",
   },
   {
     id: 2,
