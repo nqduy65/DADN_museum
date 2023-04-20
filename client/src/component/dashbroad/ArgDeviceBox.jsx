@@ -12,9 +12,8 @@ const ArgDeviceBox = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAvgDeviceThunk());
-  }, [dispatch]);
+  }, []);
   const data = useSelector(selectAvgDevice);
-  console.log(data);
   return (
     <Stack
       width={"20%"}

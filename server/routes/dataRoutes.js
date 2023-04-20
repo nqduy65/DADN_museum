@@ -14,6 +14,8 @@ router.get("/getavgdevice", verifyToken, dataController.getAvgDevice);
 router.get("/getnotifications", verifyToken, dataController.getNotifications);
 router.post("/setautofan", verifyToken, dataController.setAutoFan);
 router.get("/getuserlog", verifyToken, dataController.getUserLog);
+router.post("/chartempdata", verifyToken, dataController.getChartTempData);
+router.post("/charhumidata", verifyToken, dataController.getChartHumiData);
 // router.get("/lasthumidity", verifyToken, dataController.lastHumidity);
 // router.get("/lastsoildmoisture", verifyToken, dataController.lastSoildMoisture);
 // router.get("/lastfan", verifyToken, dataController.lastFan);
@@ -23,9 +25,8 @@ router.get("/getuserlog", verifyToken, dataController.getUserLog);
 // router.get("/notifications", verifyToken, dataController.getNotifications);
 // router.get("/temperatures", verifyToken, dataController.getTemperatures);
 // router.get("/humidities", verifyToken, dataController.getHumidities);
-// router.get("/soildmoistures", verifyToken, dataController.getSoildMoistures);
-// router.get("/daytemperatures", verifyToken, dataController.getDayTemperatures);
-// router.get("/dayhumidities", verifyToken, dataController.getDayHumidities);
+router.get("/daytemperatures", verifyToken, dataController.getDayTemperatures);
+router.get("/dayhumidities", verifyToken, dataController.getDayHumidities);
 // router.get(
 //   "/daysoildmoistures",
 //   verifyToken,

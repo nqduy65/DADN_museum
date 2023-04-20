@@ -8,9 +8,8 @@ const ArgHumiBox = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAvgHumiThunk());
-  }, [dispatch]);
+  }, []);
   const data = useSelector(selectAvgHumi);
-  console.log(data);
   return (
     <Stack
       width={"20%"}

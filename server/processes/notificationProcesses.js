@@ -50,27 +50,37 @@ const listenEvents = (io) => {
             } */ else {
         mess = "Fan status was adjusted";
       }
-      saveNotiOnDb("fan", mess, createAt);
+      saveNotiOnDb("ttq-fan", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
     } else if (topic.endsWith("ttq-temp")) {
       saveTempDb("Phòng 1", data);
+      if (data <= 10) {
+        mess = `Nhiệt độ quá thấp, dưới 10 độ C (${data} độ C)`;
+      } else if (data >= 40) {
+        mess = `Nhiệt độ quá cao, trên 40 độ C (${data} độ C)`;
+      } else {
+        mess = `Nhiệt độ bình thường, (${data} độ C)`;
+      }
+      saveNotiOnDb("ttq-temp", mess, createAt);
+      io.emit("newNotification", { message: mess, createdAt: createAt });
+    } else if (topic.endsWith("ttq-autofan")) {
       if (data == 0) {
-        mess = "Mode was set to manual";
+        mess = "Quạt đã chỉnh sang thủ công";
       } else if (data == 1) {
-        mess = "Mode was set to auto";
+        mess = "Quạt đã chỉnh sang tự động";
       } else {
         mess = "Mode was adjusted";
       }
-      saveNotiOnDb("mode", mess, createAt);
+      saveNotiOnDb("ttq-autofan", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
     } else if (topic.endsWith("ttq-humi")) {
       saveHumiDb("Phòng 1", data);
-      if (data == 0) {
-        mess = "Pump was turned off";
-      } else if (data == 1) {
-        mess = "Pump was turned on";
+      if (data <= 10) {
+        mess = `Độ ẩm quá thấp, dưới 10 % (${data} %)`;
+      } else if (data >= 40) {
+        mess = `Độ ẩm quá cao, trên 40 % (${data} %)`;
       } else {
-        mess = "Pump was adjusted";
+        mess = `Độ ẩm bình thường, (${data} %)`;
       }
       saveNotiOnDb("pump", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });

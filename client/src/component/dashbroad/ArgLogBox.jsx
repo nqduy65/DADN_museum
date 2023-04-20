@@ -31,7 +31,6 @@ const ArgLogBox = ({ name, role, updatedAt }) => {
         lineHeight={"26px"}
         color="#121212"
       >
-        {" "}
         {updatedAt}
       </Typography>
     </Box>

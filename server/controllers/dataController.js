@@ -622,6 +622,46 @@ export const getUserLog = async (req, res, next) => {
 
   res.status(200).json({ message: "successful", data: formattedUserLogs });
 };
+
+export const getChartTempData = async (req, res, next) => {
+  // Lấy ngày hiện tại
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Đặt giờ về đầu ngày
+
+  // Lấy tất cả các tài liệu của Temp trong ngày hôm nay
+  Temp.find({ createdAt: { $gte: today } }, (err, temps) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // Chuyển đổi mỗi đối tượng Temp thành đối tượng mới với trường x là createdAt và trường y là giá trị của Temp
+      const data = temps.map((temp) => ({
+        x: temp.createdAt,
+        y: parseFloat(temp.data),
+      }));
+      res.status(200).json({ message: "successful", data: data });
+    }
+  });
+};
+export const getChartHumiData = async (req, res, next) => {
+  // Lấy ngày hiện tại
+  // Lấy ngày hiện tại
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Đặt giờ về đầu ngày
+
+  // Lấy tất cả các tài liệu của Humi trong ngày hôm nay
+  Humi.find({ createdAt: { $gte: today } }, (err, humis) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // Chuyển đổi mỗi đối tượng Humi thành đối tượng mới với trường x là createdAt và trường y là giá trị của Humi
+      const data = humis.map((humi) => ({
+        x: humi.createdAt,
+        y: parseFloat(humi.data),
+      }));
+      res.status(200).json({ message: "successful", data: data });
+    }
+  });
+};
 // export const getNotifications = async (req, res, next) => {
 //   let limit = req.query["limit"] ? req.query["limit"] : 24;
 //   const data = Notification.find({}, "feed content createdAt")
@@ -728,167 +768,173 @@ export const getUserLog = async (req, res, next) => {
 //     });
 // };
 
-// function isIsoDate(str) {
-//   if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
-//   const d = new Date(str);
-//   return d instanceof Date && !isNaN(d) && d.toISOString() === str; // valid date
-// }
-// function average(data) {
-//   if (data.length == 0) {
-//     return 0;
-//   } else {
-//     return data.reduce((a, b) => a + b, 0) / data.length;
-//   }
-// }
-// function dataCal(data, today) {
-//   if (data.length > 0) {
-//     let result = [];
-//     let latest;
-//     if (today) {
-//       latest = new Date(data[data.length - 1][0]);
-//     } else {
-//       latest = new Date(data[data.length - 1][0]);
-//       latest.setHours(23);
-//     }
-//     let arr = new Array(24).fill([]);
-//     data.map((e) => {
-//       const d = new Date(e[0]);
-//       let t = d.getHours();
-//       arr[t] = [...arr[t], parseFloat(e[1])];
-//     });
-//     let eArr = new Array(24).fill(0);
-//     arr.map((e, i) => {
-//       eArr[i] = average(e);
-//     });
-//     for (let i = latest.getHours(), count = 23; count >= 0; count--) {
-//       result[count] = { hour: i, value: eArr[i] };
-//       if (i == 0) {
-//         i = 23;
-//       } else {
-//         i--;
-//       }
-//     }
-//     return result;
-//   } else {
-//     return [];
-//   }
-// }
+function isIsoDate(str) {
+  if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
+  const d = new Date(str);
+  return d instanceof Date && !isNaN(d) && d.toISOString() === str; // valid date
+}
+function average(data) {
+  if (data.length == 0) {
+    return 0;
+  } else {
+    return data.reduce((a, b) => a + b, 0) / data.length;
+  }
+}
+function dataCal(data, today) {
+  if (data.length > 0) {
+    let result = [];
+    let latest;
+    if (today) {
+      latest = new Date(data[data.length - 1][0]);
+    } else {
+      latest = new Date(data[data.length - 1][0]);
+      latest.setHours(23);
+    }
+    let arr = new Array(24).fill([]);
+    data.map((e) => {
+      const d = new Date(e[0]);
+      let t = d.getHours();
+      arr[t] = [...arr[t], parseFloat(e[1])];
+    });
+    let eArr = new Array(24).fill(0);
+    arr.map((e, i) => {
+      eArr[i] = average(e);
+    });
+    for (let i = latest.getHours(), count = 23; count >= 0; count--) {
+      result[count] = { hour: i, value: eArr[i] };
+      if (i == 0) {
+        i = 23;
+      } else {
+        i--;
+      }
+    }
+    return result;
+  } else {
+    return [];
+  }
+}
 
-// export const getDayTemperatures = async (req, res, next) => {
-//   let date = req.query["date"] ? req.query["date"] : null;
-//   let params;
-//   let now = true;
-//   if (date && isIsoDate(date)) {
-//     let today = new Date();
-//     let d = new Date(date);
-//     if (
-//       today.getFullYear() == d.getFullYear() &&
-//       today.getMonth() == d.getMonth() &&
-//       today.getDate() == d.getDate()
-//     ) {
-//       params = {
-//         hours: 24,
-//       };
-//     } else {
-//       let startD = new Date(
-//         `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`
-//       );
-//       let startDString = startD.toISOString();
-//       let endD = new Date(
-//         `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate() + 1}`
-//       );
-//       let endDString = endD.toISOString();
-//       params = {
-//         start_time: startDString,
-//         end_time: endDString,
-//       };
-//       now = false;
-//     }
-//   } else {
-//     params = {
-//       hours: 24,
-//     };
-//   }
-//   adaRequest
-//     .get(`/feeds/temperature/data/chart`, {
-//       params: params,
-//     })
-//     .then(({ data }) => {
-//       let values = data["data"];
-//       let ld = new Date(values[values.length - 1][0]);
-//       let newValues = values.filter((e) => {
-//         const d = new Date(e[0]);
-//         if (d.getHours() == ld.getHours() && d.getDate() == ld.getDate() - 1) {
-//           return false;
-//         }
-//         return true;
-//       });
-//       let result = dataCal(newValues, now);
-//       res.status(200).json({ feed_key: "temperature", data: result });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
+export const getDayTemperatures = async (req, res, next) => {
+  let date = req.query["date"] ? req.query["date"] : null;
+  let params;
+  let now = true;
+  if (date && isIsoDate(date)) {
+    let today = new Date();
+    let d = new Date(date);
+    if (
+      today.getFullYear() == d.getFullYear() &&
+      today.getMonth() == d.getMonth() &&
+      today.getDate() == d.getDate()
+    ) {
+      params = {
+        hours: 24,
+      };
+    } else {
+      let startD = new Date(
+        `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`
+      );
+      let startDString = startD.toISOString();
+      let endD = new Date(
+        `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate() + 1}`
+      );
+      let endDString = endD.toISOString();
+      params = {
+        start_time: startDString,
+        end_time: endDString,
+      };
+      now = false;
+    }
+  } else {
+    params = {
+      hours: 24,
+    };
+  }
+  adaRequest
+    .get(`/feeds/ttq-temp/data/chart`, {
+      params: params,
+    })
+    .then(({ data }) => {
+      let values = data["data"];
+      let ld = new Date(values[values.length - 1][0]);
+      let newValues = values.filter((e) => {
+        const d = new Date(e[0]);
+        if (d.getHours() == ld.getHours() && d.getDate() == ld.getDate() - 1) {
+          return false;
+        }
+        return true;
+      });
+      let result = dataCal(newValues, now);
+      const newArray = result.map((item) => {
+        return { x: item.hour, y: item.value };
+      });
+      res.status(200).json({ feed_key: "temperature", data: newArray });
+    })
+    .catch((error) => {
+      res.status(400);
+      return next(new Error(error.message));
+    });
+};
 
-// export const getDayHumidities = async (req, res, next) => {
-//   let date = req.query["date"] ? req.query["date"] : null;
-//   let params;
-//   let now = true;
-//   if (date && isIsoDate(date)) {
-//     let today = new Date();
-//     let d = new Date(date);
-//     if (
-//       today.getFullYear() == d.getFullYear() &&
-//       today.getMonth() == d.getMonth() &&
-//       today.getDate() == d.getDate()
-//     ) {
-//       params = {
-//         hours: 24,
-//       };
-//     } else {
-//       let startD = new Date(
-//         `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`
-//       );
-//       let startDString = startD.toISOString();
-//       let endD = new Date(
-//         `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate() + 1}`
-//       );
-//       let endDString = endD.toISOString();
-//       params = {
-//         start_time: startDString,
-//         end_time: endDString,
-//       };
-//       now = false;
-//     }
-//   } else {
-//     params = {
-//       hours: 24,
-//     };
-//   }
-//   adaRequest
-//     .get(`/feeds/humidity/data/chart`, {
-//       params: params,
-//     })
-//     .then(({ data }) => {
-//       let values = data["data"];
-//       let ld = new Date(values[values.length - 1][0]);
-//       let newValues = values.filter((e) => {
-//         const d = new Date(e[0]);
-//         if (d.getHours() == ld.getHours() && d.getDate() == ld.getDate() - 1) {
-//           return false;
-//         }
-//         return true;
-//       });
-//       let result = dataCal(newValues, now);
-//       res.status(200).json({ feed_key: "humidity", data: result });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
+export const getDayHumidities = async (req, res, next) => {
+  let date = req.query["date"] ? req.query["date"] : null;
+  let params;
+  let now = true;
+  if (date && isIsoDate(date)) {
+    let today = new Date();
+    let d = new Date(date);
+    if (
+      today.getFullYear() == d.getFullYear() &&
+      today.getMonth() == d.getMonth() &&
+      today.getDate() == d.getDate()
+    ) {
+      params = {
+        hours: 24,
+      };
+    } else {
+      let startD = new Date(
+        `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()}`
+      );
+      let startDString = startD.toISOString();
+      let endD = new Date(
+        `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate() + 1}`
+      );
+      let endDString = endD.toISOString();
+      params = {
+        start_time: startDString,
+        end_time: endDString,
+      };
+      now = false;
+    }
+  } else {
+    params = {
+      hours: 24,
+    };
+  }
+  adaRequest
+    .get(`/feeds/ttq-humi/data/chart`, {
+      params: params,
+    })
+    .then(({ data }) => {
+      let values = data["data"];
+      let ld = new Date(values[values.length - 1][0]);
+      let newValues = values.filter((e) => {
+        const d = new Date(e[0]);
+        if (d.getHours() == ld.getHours() && d.getDate() == ld.getDate() - 1) {
+          return false;
+        }
+        return true;
+      });
+      let result = dataCal(newValues, now);
+      const newArray = result.map((item) => {
+        return { x: item.hour, y: item.value };
+      });
+      res.status(200).json({ feed_key: "humidity", data: newArray });
+    })
+    .catch((error) => {
+      res.status(400);
+      return next(new Error(error.message));
+    });
+};
 
 // export const getDaySoildMoistures = async (req, res, next) => {
 //   let date = req.query["date"] ? req.query["date"] : null;

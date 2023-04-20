@@ -6,6 +6,21 @@ const initialState = {
   argDevice: { status: "", data: [0, 0] },
   argNotification: { status: "", data: [] },
   argUserLog: { status: "", data: [] },
+  dataChart: {
+    status: "",
+    data: [
+      {
+        id: "temp",
+        color: "F70E46",
+        data: [],
+      },
+      {
+        id: "humi",
+        color: "#6040EF",
+        data: [],
+      },
+    ],
+  },
 };
 const dashBoardSlice = createSlice({
   name: "dashboard",
@@ -63,15 +78,37 @@ const dashBoardSlice = createSlice({
 
     builder.addCase(getAvgUserLogThunk.pending, (state, action) => {
       state.argUserLog.status = "pending";
-      console.log("getAvgDeviceThunk is pending");
     });
     builder.addCase(getAvgUserLogThunk.fulfilled, (state, action) => {
-      console.log("getAvgDeviceThunk is fulfilled");
       console.log(action.payload.data);
       state.argUserLog.status = "idle";
       state.argUserLog.data = action.payload.data.data;
     });
     builder.addCase(getAvgUserLogThunk.rejected, (state, action) => {
+      console.log("getAvgDeviceThunk is rejected:", action.error.message);
+    });
+
+    builder.addCase(getChartTempDataThunk.pending, (state, action) => {
+      state.dataChart.status = "pending";
+    });
+    builder.addCase(getChartTempDataThunk.fulfilled, (state, action) => {
+      console.log(action.payload.data);
+      state.dataChart.status = "idle";
+      state.dataChart.data[0].data = action.payload.data.data;
+    });
+    builder.addCase(getChartTempDataThunk.rejected, (state, action) => {
+      console.log("getAvgDeviceThunk is rejected:", action.error.message);
+    });
+
+    builder.addCase(getChartHumiDataThunk.pending, (state, action) => {
+      state.dataChart.status = "pending";
+    });
+    builder.addCase(getChartHumiDataThunk.fulfilled, (state, action) => {
+      console.log(action.payload.data);
+      state.dataChart.status = "idle";
+      state.dataChart.data[1].data = action.payload.data.data;
+    });
+    builder.addCase(getChartHumiDataThunk.rejected, (state, action) => {
       console.log("getAvgDeviceThunk is rejected:", action.error.message);
     });
   },
@@ -131,6 +168,30 @@ export const getAvgUserLogThunk = createAsyncThunk(
   async () => {
     try {
       const res = await API.getUserLog();
+      return res;
+    } catch (error) {
+      console.log("Error in getAvgTemp: ", error);
+      throw error;
+    }
+  }
+);
+export const getChartTempDataThunk = createAsyncThunk(
+  "dashboard/getChartTempDataThunk",
+  async () => {
+    try {
+      const res = await API.getCharTempData();
+      return res;
+    } catch (error) {
+      console.log("Error in getAvgTemp: ", error);
+      throw error;
+    }
+  }
+);
+export const getChartHumiDataThunk = createAsyncThunk(
+  "dashboard/getChartHumiDataThunk",
+  async () => {
+    try {
+      const res = await API.getCharHumiData();
       return res;
     } catch (error) {
       console.log("Error in getAvgTemp: ", error);

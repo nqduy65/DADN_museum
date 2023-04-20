@@ -3,15 +3,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAvgTempThunk } from "../../pages/DashBroad/dashBroadSlice";
 import { selectAvgTemp } from "../../pages/DashBroad/selectors";
-
+import React from "react";
 const ArgTempBox = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgTempThunk());
-  }, [dispatch]);
+  }, []);
   const data = useSelector(selectAvgTemp);
-  console.log(data);
   return (
     <Stack
       width={"20%"}

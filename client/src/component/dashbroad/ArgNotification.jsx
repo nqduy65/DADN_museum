@@ -10,9 +10,8 @@ const ArgNotification = () => {
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgNotiThunk());
-  }, [dispatch]);
+  }, []);
   const data = useSelector(selectNofi);
-  console.log(data);
   return (
     <Stack
       width={"25%"}

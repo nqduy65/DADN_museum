@@ -13,9 +13,8 @@ const ArgUserLog = () => {
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgUserLogThunk());
-  }, [dispatch]);
+  }, []);
   const data = useSelector(selectUserLog);
-  console.log(data);
   return (
     <Stack
       width={"25%"}
