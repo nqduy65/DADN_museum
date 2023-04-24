@@ -20,22 +20,22 @@ const ArgNotification = () => {
       bgcolor={"#fff"}
       paddingLeft={2}
       paddingTop={2}
-      paddingBottom={1}
       gap={5}
       alignItems={"flex-start"}
     >
       <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
         Thông báo
       </Typography>
-      <Box
+      <Stack
         width={"100%"}
-        maxHeight={"300px"}
+        maxHeight={"400px"}
         sx={{
           overflowY: "scroll",
           "&::-webkit-scrollbar": {
             display: "none",
           },
         }}
+        gap={3}
       >
         {data.data.map((item) => (
           <ArgNotiMess
@@ -44,7 +44,7 @@ const ArgNotification = () => {
             content={item.content}
           />
         ))}
-      </Box>
+      </Stack>
     </Stack>
   );
 };

@@ -8,6 +8,8 @@ router.get("/getroominfos", verifyToken, dataController.getRoomInfos);
 router.get("/getroomdevices", verifyToken, dataController.getRoomDevices);
 router.post("/getdevicedetail", verifyToken, dataController.getDeviceDetail);
 router.get("/getFan", verifyToken, dataController.getFan);
+router.get("/getTemp", verifyToken, dataController.getTemp);
+router.get("/getHumi", verifyToken, dataController.getHumi);
 router.get("/getavgtemp", verifyToken, dataController.getAvgTemp);
 router.get("/getavghumi", verifyToken, dataController.getAvgHumi);
 router.get("/getavgdevice", verifyToken, dataController.getAvgDevice);

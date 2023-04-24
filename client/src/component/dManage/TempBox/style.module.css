@@ -1,0 +1,14 @@
+.tempBox {
+    background-position: 0% 50%;
+    animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+    50% {
+        background-position: 100% 50%;
+    }
+
+    60% {
+        background-position: 100% 51%;
+    }
+}

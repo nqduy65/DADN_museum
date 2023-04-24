@@ -77,7 +77,13 @@ const DeviceItem = ({ info, select, onClick }) => {
         transition: "all ease-in-out 0.5s",
       }}
     >
-      <ArrowBackIosIcon sx={{ color: "rgba(75, 54, 204, 1)" }} />
+      <ArrowBackIosIcon
+        sx={{
+          color: "rgba(75, 54, 204, 1)",
+          opacity: select === info.id ? 1 : 0,
+          transition: "all 0.25 ease-in-out",
+        }}
+      />
       <Stack gap={2}>
         <Stack direction={"row"} alignItems={"center"} gap={1}>
           <Typography

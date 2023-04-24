@@ -55,7 +55,7 @@ const ArgUserLog = () => {
           Thời gian
         </Typography>
       </Box>
-      <Box
+      <Stack
         width={"100%"}
         maxHeight={"300px"}
         sx={{
@@ -64,6 +64,7 @@ const ArgUserLog = () => {
             display: "none",
           },
         }}
+        gap={5}
       >
         {data.data.map((item) => (
           <ArgLogBox
@@ -72,7 +73,7 @@ const ArgUserLog = () => {
             updatedAt={item.updatedAt}
           />
         ))}
-      </Box>
+      </Stack>
     </Stack>
   );
 };

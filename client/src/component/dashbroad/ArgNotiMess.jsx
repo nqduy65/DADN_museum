@@ -1,7 +1,7 @@
 import { Box, Typography, Stack, Avatar } from "@mui/material";
 const ArgNotiMess = ({ feed, updatedAt, content }) => {
   return (
-    <Stack width={"95%"} gap={3}>
+    <Stack width={"95%"} gap={2}>
       <Box display="flex" alignItems={"center"} gap={1}>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />{" "}
         <Stack>

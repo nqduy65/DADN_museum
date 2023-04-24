@@ -377,59 +377,6 @@ export const getDeviceDetail = async (req, res, next) => {
     }
   }
 };
-export const getTemp = async (req, res, next) => {
-  const latestTemp = await Temp.find({ room: "Phòng 1" })
-    .sort({ createdAt: -1 })
-    .limit(1)
-    .exec();
-  console.log(latestTemp);
-  if (latestTemp.length > 0) {
-    var tempData = latestTemp[0].data;
-    var time = latestTemp[0].updatedAt;
-    // Do something with tempData
-  } else {
-    // No temperature data found for this room
-  }
-  res.status(200).json({
-    message: "successful",
-    data: [
-      {
-        id: 1,
-        room: "Phòng 1",
-        device: "Temp 1",
-        value: tempData,
-        time: time,
-      },
-    ],
-  });
-};
-
-export const getHumi = async (req, res, next) => {
-  const latestHumi = await Humi.find({ room: "Phòng 1" })
-    .sort({ createdAt: -1 })
-    .limit(1)
-    .exec();
-  console.log(latestHumi);
-  if (latestHumi.length > 0) {
-    var humiData = latestHumi[0].data;
-    var time = latestHumi[0].updatedAt;
-    // Do something with tempData
-  } else {
-    // No temperature data found for this room
-  }
-  res.status(200).json({
-    message: "successful",
-    data: [
-      {
-        id: 1,
-        room: "Phòng 1",
-        device: "Humi 1",
-        value: humiData,
-        time: time,
-      },
-    ],
-  });
-};
 
 export const getFan = async (req, res, next) => {
   const latestFan = await Fan.find({ room: "Phòng 1" })
@@ -451,7 +398,7 @@ export const getFan = async (req, res, next) => {
       data: [
         {
           room: "Phòng 1",
-          name: "Fan 1",
+          name: "fan1",
           value: fanData,
           time: time,
         },
@@ -819,7 +766,7 @@ export const getChartHumiData = async (req, res, next) => {
 //       res.status(400);
 //       return next(new Error(error.message));
 //     });
-//
+// };
 
 function isIsoDate(str) {
   if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;

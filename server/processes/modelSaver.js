@@ -2,7 +2,7 @@ import Notification from "../models/notificationModel.js";
 import Humi from "../models/humiModel.js";
 import Fan from "../models/fanModel.js";
 import Temp from "../models/tempModel.js";
-
+import Auto from "../models/autoModel.js";
 export const saveNotiOnDb = async (feed, content, createdAt) => {
   let noti = new Notification({
     feed,
@@ -61,6 +61,22 @@ export const saveHumiDb = async (room, data) => {
     data,
   });
   await fan
+    .save()
+    .then((res) => {
+      console.log(`<modelSaver> ${res.content} and saved into database`);
+      return true;
+    })
+    .catch((e) => {
+      console.log(`Error ${e}`);
+    });
+  return false;
+};
+export const saveAutoDb = async (room, data) => {
+  let auto = new Auto({
+    room,
+    data,
+  });
+  await auto
     .save()
     .then((res) => {
       console.log(`<modelSaver> ${res.content} and saved into database`);

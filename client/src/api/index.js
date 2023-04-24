@@ -24,6 +24,8 @@ export const updateDevDetail = (dataForm) =>
 export const updateDevices = () => API.get("/api/data/getroomdevices");
 
 export const getFan = () => API.get("api/data/getFan");
+export const getTemp = () => API.get("api/data/getTemp");
+export const getHumi = () => API.get("api/data/getHumi");
 export const setFan = (value) => API.post("api/data/setFan", value);
 
 export const getAvgTemp = () => API.get("api/data/getavgtemp");

@@ -1,7 +1,8 @@
 import { Box, Typography, Stack } from "@mui/material";
-import CamBox from "../CamBox";
+import TempBox from "../TempBox";
+import HumiBox from "../HumiBox";
 
-const CamSection = () => {
+const HumiSection = () => {
   return (
     <Stack
       width={"100%"}
@@ -10,7 +11,6 @@ const CamSection = () => {
       borderRadius={"25px"}
       padding={"24px 40px"}
       gap={1}
-      justifyContent={"center"}
     >
       <Typography
         fontWeight={700}
@@ -18,13 +18,11 @@ const CamSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Danh Sách camera
+        Danh Sách sensor độ ẩm
       </Typography>
-      <Stack direction={"row"}>
-        <CamBox />
-      </Stack>
+      <HumiBox />
     </Stack>
   );
 };
 
-export default CamSection;
+export default HumiSection;
