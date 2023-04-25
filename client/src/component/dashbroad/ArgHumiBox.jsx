@@ -23,7 +23,7 @@ const ArgHumiBox = () => {
       paddingLeft={1}
       paddingTop={1}
       gap={1}
-      sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+      boxShadow={"inset 0px 4px 4px rgba(0, 0, 0, 0.25)"}
     >
       <Typography
         fontSize={"15px"}

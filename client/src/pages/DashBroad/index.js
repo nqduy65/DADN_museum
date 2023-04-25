@@ -37,7 +37,6 @@ const DashBroad = () => {
         <ArgTempBox />
         <ArgHumiBox />
         <ArgDeviceBox />
-        <ArgDeviceBox />
       </Stack>
       <Box
         mt={5}
@@ -49,7 +48,7 @@ const DashBroad = () => {
         borderRadius={"10.5417px"}
         position={"relative"}
         paddingTop={"100px"}
-        sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+        boxShadow={"inset 0px 4px 4px rgba(0, 0, 0, 0.25)"}
       >
         <FormControl
           sx={{
