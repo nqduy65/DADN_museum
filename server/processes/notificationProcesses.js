@@ -4,6 +4,7 @@ import {
   saveFanDb,
   saveTempDb,
   saveHumiDb,
+  saveAutoDb,
 } from "./modelSaver.js";
 
 const listenEvents = (io) => {
@@ -14,20 +15,27 @@ const listenEvents = (io) => {
     username: username,
     password: key,
   });
+  var last_update_temp = Date.now();
+  var last_update_humi = Date.now();
+  var last_update_fan = Date.now();
+  // var last_update_light = Date.now();
+  // var last_update_fan2 = Date.now();
+  // var last_update_pump = Date.now();
+  // var last_update_ct = Date.now();
   client.on("connect", () => {
     console.log("<Notification Processes> Client listen connect Events");
     /* client.subscribe(`${username}/feeds/temperature`);
     client.subscribe(`${username}/feeds/humidity`);
     client.subscribe(`${username}/feeds/soild-moisture`); */
     client.subscribe(`${username}/feeds/ttq-fan`);
+    client.subscribe(`${username}/feeds/ttq-autofan`);
     client.subscribe(`${username}/feeds/ttq-humi`);
     client.subscribe(`${username}/feeds/ttq-temp`);
   });
-
   client.on("message", (topic, message) => {
     console.log(topic, JSON.parse(message.toString()));
     const data = parseFloat(message.toString());
-    const createAt = new Date().toISOString();
+    const createAt = new Date();
     let mess = "";
     /* if(topic.endsWith('temperature')) {
 
@@ -37,8 +45,9 @@ const listenEvents = (io) => {
 
         } else  */
     if (topic.endsWith("ttq-fan")) {
+      last_update_temp = createAt;
       saveFanDb("Phòng 1", data);
-
+      last_update_fan = createAt;
       if (data == 0) {
         mess = "Fan was turned off";
       } else if (data == 1) {
@@ -52,7 +61,10 @@ const listenEvents = (io) => {
       }
       saveNotiOnDb("ttq-fan", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
+    } else if (topic.endsWith("ttq-autofan")) {
+      saveAutoDb("Phòng 1", data);
     } else if (topic.endsWith("ttq-temp")) {
+      last_update_temp = createAt;
       saveTempDb("Phòng 1", data);
       if (data <= 10) {
         mess = `Nhiệt độ quá thấp, dưới 10 độ C (${data} độ C)`;
@@ -74,6 +86,7 @@ const listenEvents = (io) => {
       saveNotiOnDb("ttq-autofan", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
     } else if (topic.endsWith("ttq-humi")) {
+      last_update_humi = createAt;
       saveHumiDb("Phòng 1", data);
       if (data <= 10) {
         mess = `Độ ẩm quá thấp, dưới 10 % (${data} %)`;
@@ -84,18 +97,56 @@ const listenEvents = (io) => {
       }
       saveNotiOnDb("pump", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
-    } else if (topic.endsWith("light")) {
-      if (data == 0) {
-        mess = "Light was turned off";
-      } else if (data == 1) {
-        mess = "Light was turned on";
-      } else {
-        mess = "Light was adjusted";
-      }
-      saveNotiOnDb("light", mess, createAt);
-      io.emit("newNotification", { message: mess, createdAt: createAt });
     }
   });
+
+  function checkConnection() {
+    // console.log(Date.now()-last_update_temp)
+    let deviceCount = 0;
+    if (Date.now() - last_update_temp > 12000) {
+      console.log("Temp Disconnected");
+    } else {
+      deviceCount = deviceCount + 1;
+      console.log("Temp Connected");
+    }
+    if (Date.now() - last_update_humi > 12000) {
+      console.log("Humi Disconnected");
+    } else {
+      deviceCount = deviceCount + 1;
+      console.log("Humi Connected");
+    }
+    // if (Date.now() - last_update_light > 12000) {
+    //   console.log("Light Disconnected");
+    // } else {
+    //   console.log("Light Connected");
+    // }
+    if (Date.now() - last_update_fan > 12000) {
+      console.log("Fan Disconnected");
+    } else {
+      deviceCount = deviceCount + 1;
+      console.log("Fan Connected");
+    }
+    io.emit("deviceConnect", {
+      deviceCount: deviceCount,
+      total: 3,
+    });
+    // if (Date.now() - last_update_fan2 > 12000) {
+    //   console.log("Fan 2 Disconnected");
+    // } else {
+    //   console.log("Fan 2 Connected");
+    // }
+    // if (Date.now() - last_update_ct > 12000) {
+    //   console.log("CT Disconnected");
+    // } else {
+    //   console.log("CT Connected");
+    // }
+    // if (Date.now() - last_update_pump > 12000) {
+    //   console.log("Pump Disconnected");
+    // } else {
+    //   console.log("PUmp Connected");
+    // }
+  }
+  setInterval(checkConnection, 15000);
 };
 
 export default listenEvents;

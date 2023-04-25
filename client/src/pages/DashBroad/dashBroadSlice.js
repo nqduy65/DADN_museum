@@ -21,6 +21,23 @@ const initialState = {
       },
     ],
   },
+  deviceChart: {
+    status: "",
+    data: [
+      {
+        id: "Hoạt động",
+        label: "Hoạt động",
+        value: 9,
+        color: "hsl(271, 70%, 50%)",
+      },
+      {
+        id: "Không kết nối",
+        label: "Không kết nối",
+        value: 1,
+        color: "hsl(333, 70%, 50%)",
+      },
+    ],
+  },
 };
 const dashBoardSlice = createSlice({
   name: "dashboard",
@@ -28,6 +45,10 @@ const dashBoardSlice = createSlice({
   reducers: {
     changeAvgTemp: (state, action) => {
       state.currRoom = action.payload;
+    },
+    changeDevice: (state, action) => {
+      state.deviceChart.data[0].value = action.payload[0];
+      state.deviceChart.data[1].value = action.payload[1];
     },
   },
   extraReducers: (builder) => {

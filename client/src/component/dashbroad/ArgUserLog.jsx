@@ -13,10 +13,14 @@ const ArgUserLog = () => {
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgUserLogThunk());
+    setInterval(() => {
+      dispatch(getAvgUserLogThunk());
+    }, 3600 * 60 * 5);
   }, []);
   const data = useSelector(selectUserLog);
   return (
     <Stack
+      height={"500px"}
       width={"25%"}
       border={"1.05417px solid #E0E0E0"}
       borderRadius={"10px"}
@@ -24,9 +28,10 @@ const ArgUserLog = () => {
       paddingLeft={2}
       paddingRight={5}
       paddingTop={2}
-      paddingBottom={10}
+      paddingBottom={2}
       gap={3}
       alignItems={"flex-start"}
+      sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
         Truy cập gần đây
@@ -57,7 +62,7 @@ const ArgUserLog = () => {
       </Box>
       <Stack
         width={"100%"}
-        maxHeight={"300px"}
+        maxHeight={"350px"}
         sx={{
           overflowY: "scroll",
           "&::-webkit-scrollbar": {

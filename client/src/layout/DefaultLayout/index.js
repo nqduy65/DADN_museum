@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 const DefaultLayout = ({ children }) => {
   return (
     <div>
-      <Box display="flex" height="100vh" backgroundColor="#F5F5F5">
+      <Box display="flex" height="100vh" backgroundColor="rgb(236,236,238)">
         <Sidebar />
         <Box
           width={"100%"}

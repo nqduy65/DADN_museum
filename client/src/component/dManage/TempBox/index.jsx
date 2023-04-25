@@ -47,7 +47,7 @@ const TempBox = () => {
       height={"200px"}
       bgcolor={"black"}
       sx={{
-        background: `url(${cold})`,
+        background: `url(${warm})`,
         // backgroundSize: "cover",
         backgroundPosition: "center",
       }}

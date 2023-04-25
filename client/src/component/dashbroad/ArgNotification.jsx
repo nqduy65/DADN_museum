@@ -10,10 +10,14 @@ const ArgNotification = () => {
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgNotiThunk());
+    setInterval(() => {
+      dispatch(getAvgNotiThunk());
+    }, 3600 * 60 * 5);
   }, []);
   const data = useSelector(selectNofi);
   return (
     <Stack
+      height={"500px"}
       width={"25%"}
       border={"1.05417px solid #E0E0E0"}
       borderRadius={"10px"}
@@ -22,6 +26,7 @@ const ArgNotification = () => {
       paddingTop={2}
       gap={5}
       alignItems={"flex-start"}
+      sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
         Thông báo

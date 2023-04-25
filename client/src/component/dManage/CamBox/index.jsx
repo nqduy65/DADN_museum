@@ -85,7 +85,17 @@ const CamBox = () => {
         <Typography fontSize={"20px"} fontWeight={500} lineHeight={"140%"}>
           Camera 1
         </Typography>
-        <AntSwitch sx={{ justifySelf: "flex-end" }} onClick={toggleCamera} />
+        <Stack direction={"row"} gap={1}>
+          <Typography
+            fontSize={"14px"}
+            lineHeight={"140%"}
+            fontWeight={500}
+            color={"#4B36CC"}
+          >
+            Show
+          </Typography>
+          <AntSwitch sx={{ justifySelf: "flex-end" }} onClick={toggleCamera} />
+        </Stack>
       </Box>
       <Box
         // width={"100%"}

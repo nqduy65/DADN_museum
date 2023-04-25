@@ -7,13 +7,14 @@ import ArgHumiBox from "../../component/dashbroad/ArgHumiBox";
 import ArgDeviceBox from "../../component/dashbroad/ArgDeviceBox";
 import ArgNotification from "../../component/dashbroad/ArgNotification";
 import ArgUserLog from "../../component/dashbroad/ArgUserLog";
-import MyResponsiveLine from "../../component/dashbroad/MyResponsiveLine ";
+import MyResponsiveLine from "../../component/dashbroad/MyResponsiveLine";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MyResponsivePie from "../../component/dashbroad/MyResponsiveLCircle";
 
 const DashBroad = () => {
   const [value, setValue] = useState("3");
@@ -26,6 +27,9 @@ const DashBroad = () => {
   useEffect(() => {
     console.log("dispatching getAvgTempThunk");
     dispatch(getAvgTempThunk());
+    setInterval(() => {
+      dispatch(getAvgTempThunk());
+    }, 3600 * 60 * 5);
   }, []);
   return (
     <Box margin={"50px 100px 50px 50px"}>
@@ -45,6 +49,7 @@ const DashBroad = () => {
         borderRadius={"10.5417px"}
         position={"relative"}
         paddingTop={"100px"}
+        sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
       >
         <FormControl
           sx={{
@@ -84,6 +89,34 @@ const DashBroad = () => {
       </Box>
       <Stack direction={"row"} justifyContent={"space-between"} mt={"50px"}>
         <ArgNotification />
+        <Box
+          width={"40%"}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          bgcolor={"#FFF"}
+          borderRadius={"10.5417px"}
+          position={"relative"}
+          paddingTop={"100px"}
+          sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+        >
+          <Typography
+            fontWeight={400}
+            fontSize={"14px"}
+            lineHeight={"19px"}
+            sx={{
+              position: "absolute",
+              top: 10,
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            Số thiết bị hoạt động
+          </Typography>
+          <Box width="90%" height={"500px"}>
+            <MyResponsivePie />
+          </Box>
+        </Box>
         <ArgUserLog />
       </Stack>
     </Box>

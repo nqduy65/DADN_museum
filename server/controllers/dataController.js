@@ -2,8 +2,9 @@ import axios from "axios";
 import Notification from "../models/notificationModel.js";
 import Room from "../models/roomModel.js";
 import Temp from "../models/tempModel.js";
-import Humi from "../models/humiModel.js";
 import Fan from "../models/fanModel.js";
+import Auto from "../models/autoModel.js";
+import Humi from "../models/humiModel.js";
 import Camera from "../models/cameraModel.js";
 import UserLog from "../models/userLogModel.js";
 import { publishData } from "../utils/mqttHelper.js";
@@ -249,11 +250,22 @@ export const getRoomInfos = async (req, res, next) => {
 
 export const getRoomDevices = async (req, res, next) => {
   let room = req.query["room"] ? req.query["room"] : "";
+  const lastAuto = await Auto.find({ room })
+    .sort({ createdAt: -1 })
+    .limit(1)
+    .exec();
+  console.log(lastAuto);
+  if (lastAuto.length > 0) {
+    var autoData = lastAuto[0].value;
+    // Do something with tempData
+  } else {
+    // No temperature data found for this room
+  }
   res.status(200).json({
     message: "successful",
     data: [
-      { id: "1", name: "Quạt", connected: "1/1", auto: "1/1" },
-      { id: "2", name: "Camera", connected: "1/1" },
+      { id: "1", name: "Quạt", connected: "1/1", auto: `${autoData}/1` },
+      { id: "2", name: "Camera", connected: "0/1" },
       { id: "3", name: "Sensor nhiệt độ", connected: "1/1" },
       { id: "4", name: "Sensor độ ẩm", connected: "1/1" },
     ],
@@ -271,6 +283,17 @@ export const getDeviceDetail = async (req, res, next) => {
     if (latestFan.length > 0) {
       var fanData = latestFan[0].data;
       var time = latestFan[0].updatedAt;
+      // Do something with tempData
+    } else {
+      // No temperature data found for this room
+    }
+    const lastAuto = await Auto.find({ room })
+      .sort({ createdAt: -1 })
+      .limit(1)
+      .exec();
+    console.log(lastAuto);
+    if (lastAuto.length > 0) {
+      var autoData = lastAuto[0].data;
       // Do something with tempData
     } else {
       // No temperature data found for this room

@@ -4,7 +4,7 @@ const RoomBox = ({ name, temp, humi, selected, onClick }) => {
   return (
     <Box
       width=" 323px;"
-      height="105px;"
+      height="129px;"
       backgroundColor={selected ? "#ECE9FF" : "#F2FBFD"}
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25);"
       borderRadius="0px 20px"
@@ -14,6 +14,7 @@ const RoomBox = ({ name, temp, humi, selected, onClick }) => {
       sx={{
         transition: "all 0.5s ease-in-out",
       }}
+      paddingTop={2}
     >
       <Typography
         variant="h3"

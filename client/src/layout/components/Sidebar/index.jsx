@@ -15,6 +15,7 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import "react-pro-sidebar/dist/css/styles.css";
+import { useEffect } from "react";
 const Item = ({ title, to, icon, selected, setSelected, isCollasped, sx }) => {
   return (
     <MenuItem
@@ -52,6 +53,14 @@ const Item = ({ title, to, icon, selected, setSelected, isCollasped, sx }) => {
   );
 };
 const Sidebar = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("userInfo"));
+    if (items) {
+      setItems(items);
+    }
+  }, []);
   const [isCollasped, setCollasped] = useState(false);
   const [selected, setSelected] = useState("Tổng quan");
   return (
@@ -107,7 +116,7 @@ const Sidebar = () => {
                 alignContent="center"
                 ml="15px"
               >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src={`${items.avatar}`} />
                 <Typography
                   variant="h6"
                   color={"black"}
@@ -118,7 +127,7 @@ const Sidebar = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Ed Roh
+                  {items.name}
                 </Typography>
                 <IconButton onClick={() => setCollasped(!isCollasped)}>
                   <MenuOutlinedIcon sx={{ fontSize: "30px" }} />

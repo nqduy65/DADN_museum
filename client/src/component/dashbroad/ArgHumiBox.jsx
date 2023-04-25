@@ -8,6 +8,9 @@ const ArgHumiBox = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAvgHumiThunk());
+    setInterval(() => {
+      dispatch(getAvgHumiThunk());
+    }, 3600 * 60 * 5);
   }, []);
   const data = useSelector(selectAvgHumi);
   return (
@@ -20,6 +23,7 @@ const ArgHumiBox = () => {
       paddingLeft={1}
       paddingTop={1}
       gap={1}
+      sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Typography
         fontSize={"15px"}

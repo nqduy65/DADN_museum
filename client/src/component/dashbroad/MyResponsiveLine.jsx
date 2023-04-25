@@ -129,6 +129,10 @@ const MyResponsiveLine = ({ value }) => {
   useEffect(() => {
     dispatch(getChartTempDataThunk());
     dispatch(getChartHumiDataThunk());
+    setInterval(() => {
+      dispatch(getChartTempDataThunk());
+      dispatch(getChartHumiDataThunk());
+    }, 3600 * 60 * 5);
   }, []);
   const data = useSelector(selectdataChart);
   return (

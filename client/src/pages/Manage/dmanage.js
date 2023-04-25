@@ -16,6 +16,9 @@ const dmanageSlice = createSlice({
     changeTemp: (state, action) => {
       state.temp.data.value = action.payload;
     },
+    changeHumi: (state, action) => {
+      state.humi.data.value = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getFan.pending, (state, action) => {

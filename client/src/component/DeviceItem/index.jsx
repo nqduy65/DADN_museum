@@ -2,6 +2,7 @@ import { Box, Stack, Typography, Switch } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { styled } from "@mui/material/styles";
 import img from "~/static/svgs/fan.svg";
+import RefreshIcon from "@mui/icons-material/Refresh";
 const IOSSwitch = styled((props) => (
   <Switch
     size="small"
@@ -85,7 +86,7 @@ const DeviceItem = ({ info, select, onClick }) => {
         }}
       />
       <Stack gap={2}>
-        <Stack direction={"row"} alignItems={"center"} gap={1}>
+        <Stack direction={"row"} alignItems={"center"} gap={1} width={"160px"}>
           <Typography
             fontWeight=" 600"
             fontSize="16px"
@@ -110,15 +111,18 @@ const DeviceItem = ({ info, select, onClick }) => {
         justifyContent={"flex-end"}
         alignItems={"flex-end"}
         justifySelf={"flex-end"}
+        width={"80px"}
       >
-        <IOSSwitch defaultChecked size="small" />
+        {/* <IOSSwitch defaultChecked size="small" />
+         */}
+        <RefreshIcon fontSize="large" />
         <Typography
           fontWeight=" 600"
           fontSize="16px"
           lineHeight="140%"
           color="rgba(75, 54, 204, 1)"
         >
-          {info.auto && `Kết nối: ${info.auto}`}
+          {info.auto && `Auto: ${info.auto}`}
         </Typography>
       </Stack>
     </Box>

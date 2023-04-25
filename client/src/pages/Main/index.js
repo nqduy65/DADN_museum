@@ -34,7 +34,7 @@ const Main = () => {
     prevArrow: <ArrowBackIosIcon />,
   };
   return (
-    <Box margin={"14.05px 55px 1px 53.62px"}>
+    <Box margin={"14.05px 55px 100px 53.62px"}>
       {/*    Room section  */}
       <Box>
         <Typography
@@ -64,7 +64,7 @@ const Main = () => {
           alignItems={"center"}
           gap="40px"
           width="1531.39px"
-          height="166px"
+          height="auto"
           backgroundColor="#FFFFFF;"
           borderRadius="20px;"
           paddingInline="100px"
@@ -75,6 +75,7 @@ const Main = () => {
               margin: " 0 -1px;",
               padding: " 5px;",
             },
+            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
         >
           <Slider {...settings}>
@@ -119,6 +120,7 @@ const Main = () => {
           height="600px"
           backgroundColor="#FFF"
           borderRadius={"25px"}
+          sx={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
         >
           <Stack direction={"row"} sx={{ padding: "19px 19px 19px 43px" }}>
             <DetailSensor />

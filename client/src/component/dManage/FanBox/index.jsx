@@ -5,23 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectFan } from "../../../pages/Manage/selectors";
 
 import { io } from "socket.io-client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import dmanageSlice, {
   getFan,
   setAuto,
   setFan,
 } from "../../../pages/Manage/dmanage";
 import { useSnackbar } from "notistack";
+import Tooltip from "@mui/material/Tooltip";
 
 const FanBox = () => {
   const dispatch = useDispatch();
+
   const socket = io("http://localhost:8000");
   useEffect(() => {
     dispatch(getFan());
 
     socket.on("fanUpdate", ({ fan }) => {
-      console.log("vo nay", fan);
       toast(`Quạt đã thay đổi mức ${fan}`);
+
       dispatch(dmanageSlice.actions.changeFan(fan));
     });
     socket.on("autoUpdate", ({ auto }) => {
@@ -73,10 +75,12 @@ const FanBox = () => {
           justifyContent={"center"}
           gap={1}
         >
-          <Typography fontSize={20} lineHeight={"140%"} fontWeight={500}>
+          {/* <Typography fontSize={20} lineHeight={"140%"} fontWeight={500}>
             On
           </Typography>
-          <AntSwitch />
+          <Tooltip title="Bật/Tắt thông báo" arrow>
+            <AntSwitch onChange={() => setShowInfo(!showInfo)} />
+          </Tooltip> */}
         </Box>
       </Box>
       <Stack

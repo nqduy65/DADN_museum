@@ -16,10 +16,10 @@ const HumiBox = () => {
   useEffect(() => {
     dispatch(getHumi());
 
-    socket.on("temperatureUpdate", ({ temperature }) => {
-      console.log("vo nay", temperature);
-      toast(`Nhiệt độ thay đổi đã thay đổi mức ${temperature}`);
-      dispatch(dmanageSlice.actions.changeTemp(temperature));
+    socket.on("humidityUpdate", ({ humidity }) => {
+      console.log("vo nay", humidity);
+      toast(`Độ ẩm thay đổi đã thay đổi: ${humidity} %`);
+      dispatch(dmanageSlice.actions.changeHumi(humidity));
     });
   }, []);
 

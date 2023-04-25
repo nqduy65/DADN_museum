@@ -73,8 +73,7 @@ export const saveHumiDb = async (room, data) => {
 };
 export const saveAutoDb = async (room, data) => {
   let auto = new Auto({
-    room,
-    data,
+    value: data,
   });
   await auto
     .save()
