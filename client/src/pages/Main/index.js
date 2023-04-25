@@ -34,7 +34,7 @@ const Main = () => {
     prevArrow: <ArrowBackIosIcon />,
   };
   return (
-    <Box margin={"14.05px 55px 100px 53.62px"}>
+    <Stack margin={"14.05px 55px 100px 53.62px"} gap={2}>
       {/*    Room section  */}
       <Box>
         <Typography
@@ -128,7 +128,7 @@ const Main = () => {
           </Stack>
         </Box>
       </Box>
-    </Box>
+    </Stack>
   );
 };
 

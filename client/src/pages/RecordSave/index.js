@@ -20,7 +20,7 @@ const style = {
 
 //Mockdata
 const columns = [
-  { field: "id", headerName: "Mã thiết bị", width: 90 },
+  { field: "id", headerName: "Mã", width: 90, flex: 0.5 },
   {
     field: "deviceName",
     headerName: "Tên thiết bị",
