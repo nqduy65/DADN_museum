@@ -27,7 +27,7 @@ const theme = createTheme({
 const DetailSensor = () => {
   const DeviceDetail = useSelector(selectDeviceDetail);
   const columns = [
-    { field: "id", headerName: "Mã thiết thị" },
+    { field: "id", headerName: "Mã" },
     {
       field: "room",
       headerName: "Phòng",
@@ -49,6 +49,7 @@ const DetailSensor = () => {
           <Typography
             color={value === "Active" ? "red" : "green"}
             sx={{ ml: "5px" }}
+            fontSize={15}
           >
             {value}
           </Typography>
@@ -64,7 +65,11 @@ const DetailSensor = () => {
       flex: 1,
       renderCell: ({ row: { time } }) => {
         return (
-          <Typography sx={{ ml: "5px" }} color={time > 50 ? "red" : "black"}>
+          <Typography
+            sx={{ ml: "5px" }}
+            color={time > 50 ? "red" : "black"}
+            fontSize={10}
+          >
             {time}
           </Typography>
         );
@@ -114,6 +119,7 @@ const DetailSensor = () => {
             }}
             loadIcon={<LinearProgress sx={{ backgroundColor: "#FF0000" }} />}
             sx={{
+              fontSize: "15px",
               boxShadow:
                 "0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);",
               borderRadius: "4px",
