@@ -4,8 +4,8 @@ import {
   LoginPage,
   Manage,
   DashBroad,
-  exhibitManage,
   RecordSave,
+  ExhibitManage,
 } from "../pages";
 import { DefaultLayout } from "../layout";
 const publicRoutes = [
@@ -16,7 +16,7 @@ const publicRoutes = [
 const privateRoutes = [
   { path: "/", component: MainPage, layout: DefaultLayout },
   { path: "/dManage", component: Manage, layout: DefaultLayout },
-  { path: "/oManage", component: exhibitManage, layout: DefaultLayout },
+  { path: "/oManage", component: ExhibitManage, layout: DefaultLayout },
   { path: "/dashboard", component: DashBroad, layout: DefaultLayout },
   { path: "/save", component: RecordSave, layout: DefaultLayout },
 ];
