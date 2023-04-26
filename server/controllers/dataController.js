@@ -10,117 +10,6 @@ import UserLog from "../models/userLogModel.js";
 import { publishData } from "../utils/mqttHelper.js";
 import { adaRequest } from "../utils/axios.js";
 import moment from "moment";
-// export const lastTemperature = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/temperature/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "temperature",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const lastHumidity = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/humidity/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "humidity",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const lastSoildMoisture = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/soild-moisture/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "soild-moisture",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       next(new Error(error.message));
-//     });
-// };
-
-// export const lastFan = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/fan/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "fan",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const lastLight = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/light/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "light",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const lastMode = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/mode/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "mode",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const lastPump = async (req, res, next) => {
-//   adaRequest
-//     .get("/feeds/pump/data/last")
-//     .then(({ data }) => {
-//       res.status(200).json({
-//         ...data,
-//         feed_key: "pump",
-//         message: "successful",
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
 
 export const setAutoFan = async (req, res, next) => {
   const { value } = req.body;
@@ -738,111 +627,6 @@ export const getChartHumiData = async (req, res, next) => {
     }
   });
 };
-// export const getNotifications = async (req, res, next) => {
-//   let limit = req.query["limit"] ? req.query["limit"] : 24;
-//   const data = Notification.find({}, "feed content createdAt")
-//     .sort({ createdAt: "desc" })
-//     .limit(limit)
-//     .then((data) => {
-//       res.status(200).json({ message: "successful", data });
-//     })
-//     .catch((e) => {
-//       res.status(500).json({ message: "failed", error: `Error : ${e}` });
-//     });
-// };
-
-// export const getTemperatures = async (req, res, next) => {
-//   let startTime = req.query["start_time"];
-//   let endTime = req.query["end_time"];
-//   let hours = req.query["hours"] ? req.query["hours"] : 1;
-//   let params;
-//   if (startTime && endTime) {
-//     params = {
-//       start_time: startTime,
-//       end_time: endTime,
-//     };
-//   } else {
-//     params = {
-//       hours: hours,
-//     };
-//   }
-//   if (hours < 1) {
-//     hours = 1;
-//   }
-//   adaRequest
-//     .get(`/feeds/temperature/data/chart`, {
-//       params: params,
-//     })
-//     .then(({ data }) => {
-//       res.status(200).json(data);
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const getHumidities = async (req, res, next) => {
-//   let startTime = req.query["start_time"];
-//   let endTime = req.query["end_time"];
-//   let hours = req.query["hours"] ? req.query["hours"] : 1;
-//   let params;
-//   if (startTime && endTime) {
-//     params = {
-//       start_time: startTime,
-//       end_time: endTime,
-//     };
-//   } else {
-//     params = {
-//       hours: hours,
-//     };
-//   }
-//   if (hours < 1) {
-//     hours = 1;
-//   }
-//   adaRequest
-//     .get(`/feeds/humidity/data/chart`, {
-//       params: params,
-//     })
-//     .then(({ data }) => {
-//       res.status(200).json(data);
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-// };
-
-// export const getSoildMoistures = async (req, res, next) => {
-//   let startTime = req.query["start_time"];
-//   let endTime = req.query["end_time"];
-//   let hours = req.query["hours"] ? req.query["hours"] : 1;
-//   let params;
-//   if (startTime && endTime) {
-//     params = {
-//       start_time: startTime,
-//       end_time: endTime,
-//     };
-//   } else {
-//     params = {
-//       hours: hours,
-//     };
-//   }
-//   if (hours < 1) {
-//     hours = 1;
-//   }
-//   adaRequest
-//     .get(`/feeds/soild-moisture/data/chart`, {
-//       params: params,
-//     })
-//     .then(({ data }) => {
-//       res.status(200).json(data);
-//     })
-//     .catch((error) => {
-//       res.status(400);
-//       return next(new Error(error.message));
-//     });
-//
 
 function isIsoDate(str) {
   if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
@@ -1010,4 +794,38 @@ export const getDayHumidities = async (req, res, next) => {
       res.status(400);
       return next(new Error(error.message));
     });
+};
+
+export const getTempLog = async (req, res, next) => {
+  const Templist = await Temp.find({ room: "Phòng 1" })
+    .sort({ createdAt: -1 })
+    .limit(40)
+    .exec();
+  const formattedTemplist = Templist.map((templog) => {
+    const updatedAt = moment(templog.updatedAt).format("DD/MM/YYYY HH:mm");
+    const value = parseFloat(templog.data);
+    const room = templog.room;
+    return { room, value, updatedAt };
+  });
+  res.status(200).json({
+    message: "successful",
+    data: formattedTemplist,
+  });
+};
+export const getHumiLog = async (req, res, next) => {
+  const Humilist = await Humi.find({ room: "Phòng 1" })
+    .sort({ createdAt: -1 })
+    .limit(40)
+    .exec();
+  const formattedHumilist = Humilist.map((humilog) => {
+    const updatedAt = moment(humilog.updatedAt).format("DD/MM/YYYY HH:mm");
+    console.log(humilog);
+    const value = parseFloat(humilog.data);
+    const room = humilog.room;
+    return { room, value, updatedAt };
+  });
+  res.status(200).json({
+    message: "successful",
+    data: formattedHumilist,
+  });
 };

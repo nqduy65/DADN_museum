@@ -18,6 +18,8 @@ router.post("/setautofan", verifyToken, dataController.setAutoFan);
 router.get("/getuserlog", verifyToken, dataController.getUserLog);
 router.post("/chartempdata", verifyToken, dataController.getChartTempData);
 router.post("/charhumidata", verifyToken, dataController.getChartHumiData);
+router.get("/gettemplog", verifyToken, dataController.getTempLog);
+router.get("/gethumilog", verifyToken, dataController.getHumiLog);
 // router.get("/lasthumidity", verifyToken, dataController.lastHumidity);
 // router.get("/lastsoildmoisture", verifyToken, dataController.lastSoildMoisture);
 // router.get("/lastfan", verifyToken, dataController.lastFan);
