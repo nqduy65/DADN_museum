@@ -176,13 +176,13 @@ export default function ExhibitManage() {
     {
       field: 'room',
       headerName: 'Phòng',
-      flex:1,
+      flex: 1,
       editable: true
     },
     {
       field: 'locate',
       headerName: 'Vị trí',
-      flex:1,
+      flex: 1,
       width: 180,
       editable: true,
     },
@@ -190,7 +190,7 @@ export default function ExhibitManage() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      flex:1,
+      flex: 1,
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -233,45 +233,73 @@ export default function ExhibitManage() {
   ];
 
   return (
-    <Box
-      sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-      }}
-    >
-      <DataGridPro
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStart={handleRowEditStart}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
+    <>
+      <Typography
+        variant="h2"
         sx={{
-          fontSize: "15px",
-          boxShadow:
-            "0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);",
-          borderRadius: "4px",
-          "&.virtualScrollerContent": {
-            color: "white",
-          },
-          backgroundColor: "white",
+          width: "100%",
+          height: "85px",
+
+          /* Nunito/Heading/24 - Bold */
+
+          fontStyle: " normal;",
+          fontWeight: 700,
+          fontSize: "28px;",
+          lineHeight: "140%;",
+          /* identical to box height, or 34px */
+
+          color: "#4B36CC",
+          padding: "24px",
+
+          /* Inside auto layout */
         }}
-      />
-    </Box>
+      >
+        Quản lý hiện vật
+      </Typography>
+      <Box
+        sx={{
+          height: 500,
+          width: '100%',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
+          paddingInline: "10px",
+          "&.MuiDataGrid-virtualScroller ::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        <DataGridPro
+          rows={rows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStart={handleRowEditStart}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { setRows, setRowModesModel },
+          }}
+          sx={{
+            fontSize: "15px",
+            boxShadow:
+              "0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);",
+            borderRadius: "4px",
+            "&.virtualScrollerContent": {
+              color: "white",
+            },
+            backgroundColor: "white",
+          }}
+        />
+      </Box>
+    </>
   );
 }
 
