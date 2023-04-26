@@ -27,6 +27,7 @@ const updateRealTime = (io) => {
     client.subscribe(`${username}/${type}/${id_humi}/json`);
     client.subscribe(`${username}/${type}/${id_fan}/json`);
     client.subscribe(`${username}/${type}/${id_autofan}/json`);
+    client.subscribe(`${username}/${type}/ttq-light/json`);
   });
   function modifyTime(a) {
     a = a.replace("T", "");
@@ -71,6 +72,12 @@ const updateRealTime = (io) => {
     } else if (topic.search("ttq-autofan") != -1) {
       io.emit("autoUpdate", { auto: data });
       console.log(`Auto: ${data}`);
+      console.log(`Create at: ${createAt}`);
+      // const newFan = new Fan({ room: "phong 1", data: data });
+      // newFan.save();
+    } else if (topic.search("ttq-light") != -1) {
+      io.emit("lightUpdate", { light: data });
+      console.log(`Light: ${data}`);
       console.log(`Create at: ${createAt}`);
       // const newFan = new Fan({ room: "phong 1", data: data });
       // newFan.save();
