@@ -18,7 +18,7 @@ const HumiSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Danh Sách sensor độ ẩm
+        Sensor độ ẩm
       </Typography>
       <HumiBox />
     </Stack>
