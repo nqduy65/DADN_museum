@@ -3,7 +3,7 @@ import MiniBox from "../MiniBox";
 const RoomBox = ({ name, temp, humi, selected, onClick }) => {
   return (
     <Box
-      width=" 323px;"
+      width=" 360px;"
       height="129px;"
       backgroundColor={selected ? "#ECE9FF" : "#F2FBFD"}
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25);"

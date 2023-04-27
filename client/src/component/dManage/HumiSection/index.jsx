@@ -11,6 +11,7 @@ const HumiSection = () => {
       borderRadius={"25px"}
       padding={"24px 40px"}
       gap={1}
+      alignItems={"center"}
     >
       <Typography
         fontWeight={700}

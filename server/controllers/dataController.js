@@ -797,10 +797,30 @@ export const getDayHumidities = async (req, res, next) => {
 };
 
 export const getTempLog = async (req, res, next) => {
-  const Templist = await Temp.find({ room: "Phòng 1" })
-    .sort({ createdAt: -1 })
-    .limit(40)
-    .exec();
+  const Templist = await Temp.aggregate([
+    {
+      $match: { room: "Phòng 1" },
+    },
+    {
+      $sort: { createdAt: -1 },
+    },
+    {
+      $group: {
+        _id: {
+          room: "$room",
+          value: "$value",
+          updatedAt: "$updatedAt",
+        },
+        doc: { $first: "$$ROOT" },
+      },
+    },
+    {
+      $replaceRoot: { newRoot: "$doc" },
+    },
+    {
+      $limit: 40,
+    },
+  ]).exec();
   const formattedTemplist = Templist.map((templog) => {
     const updatedAt = moment(templog.updatedAt).format("DD/MM/YYYY HH:mm");
     const value = parseFloat(templog.data);
@@ -813,10 +833,30 @@ export const getTempLog = async (req, res, next) => {
   });
 };
 export const getHumiLog = async (req, res, next) => {
-  const Humilist = await Humi.find({ room: "Phòng 1" })
-    .sort({ createdAt: -1 })
-    .limit(40)
-    .exec();
+  const Humilist = await Humi.aggregate([
+    {
+      $match: { room: "Phòng 1" },
+    },
+    {
+      $sort: { createdAt: -1 },
+    },
+    {
+      $group: {
+        _id: {
+          room: "$room",
+          value: "$value",
+          updatedAt: "$updatedAt",
+        },
+        doc: { $first: "$$ROOT" },
+      },
+    },
+    {
+      $replaceRoot: { newRoot: "$doc" },
+    },
+    {
+      $limit: 40,
+    },
+  ]).exec();
   const formattedHumilist = Humilist.map((humilog) => {
     const updatedAt = moment(humilog.updatedAt).format("DD/MM/YYYY HH:mm");
     console.log(humilog);

@@ -2,28 +2,41 @@ import { Box, Stack, Typography, Button } from "@mui/material";
 import warm from "../../../static/jpgs/warm.jpg";
 import cold from "../../../static/jpgs/cold.jpg";
 import styles from "./style.module.css";
-
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { useEffect } from "react";
-import dmanageSlice, { getHumi } from "../../../pages/Manage/dmanage";
+import axios from "axios";
 import { useSnackbar } from "notistack";
-import { selectHumi } from "../../../pages/Manage/selectors";
-import { useDispatch, useSelector } from "react-redux";
+import { ADAFRUIT_KEY } from "../../../env";
 
-const HumiBox = () => {
-  const dispatch = useDispatch();
-  const socket = io("http://localhost:8000");
+const socket = io("http://localhost:8000");
+
+const LightBox = () => {
+  const [data, setData] = useState();
+  const fetchLight = async () => {
+    axios
+      .get(`https://io.adafruit.com/api/v2/Relax71/feeds/ttq-light/data/last`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-AIO-Key": `${ADAFRUIT_KEY}`,
+        },
+      })
+      .then(({ data }) => {
+        console.log("HAHAHAHA", data.value);
+        setData(data.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
-    dispatch(getHumi());
-
-    socket.on("humidityUpdate", ({ humidity }) => {
-      console.log("vo nay", humidity);
-      // toast(`Độ ẩm thay đổi đã thay đổi: ${humidity} %`);
-      dispatch(dmanageSlice.actions.changeHumi(humidity));
+    fetchLight();
+    socket.on("lightUpdate", ({ light }) => {
+      console.log("haha");
+      if ("") toast(`Độ chiếu sáng thay đổi ${light} %`, "warning");
+      setData(parseInt(light));
     });
   }, []);
 
-  const humiData = useSelector(selectHumi);
   const toast = (message, variantType) => {
     enqueueSnackbar(message, {
       variant: variantType,
@@ -39,6 +52,7 @@ const HumiBox = () => {
     });
   };
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   return (
     <Box
       className={styles.tempBox}
@@ -72,11 +86,11 @@ const HumiBox = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Typography fontSize={"40px"}>{humiData.data.value} %</Typography>
-        <Typography fontSize={"20px"}>{humiData.data.device}</Typography>
+        <Typography fontSize={"40px"}>{data} %</Typography>
+        <Typography fontSize={"20px"}>Light 1</Typography>
       </Stack>
     </Box>
   );
 };
 
-export default HumiBox;
+export default LightBox;

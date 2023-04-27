@@ -4,7 +4,7 @@ import OpacityOutlinedIcon from "@mui/icons-material/OpacityOutlined";
 const MiniBox = ({ type, num }) => {
   return (
     <Box
-      width="136px;"
+      width="160px;"
       height="48px;"
       sx={{
         backgroundImage:

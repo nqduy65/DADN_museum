@@ -17,7 +17,11 @@ const TempBox = () => {
 
     socket.on("temperatureUpdate", ({ temperature }) => {
       console.log("vo nay", temperature);
-      toast(`Nhiệt độ thay đổi đã thay đổi mức ${temperature}`);
+      if (parseFloat(temperature) > 35) toast(`Nhiệt độ thay đổi trên 35 độ`);
+      else if (parseFloat(temperature) > 30)
+        toast(`Nhiệt độ thay đổi trên 30 độ`);
+      else if (parseFloat(temperature) > 25)
+        toast(`Nhiệt độ thay đổi trên 25 độ`);
       dispatch(dmanageSlice.actions.changeTemp(temperature));
     });
   }, []);

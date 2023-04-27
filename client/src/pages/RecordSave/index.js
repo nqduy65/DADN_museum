@@ -57,29 +57,30 @@ const columns = [
 
 const RecordSave = () => {
   const [device, setDevice] = useState("temp");
-
-  const dispatch = useDispatch()
+  console.log(device);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // eslint-disable-next-line
     dispatch(fetchTempLog());
-    dispatch(fetchHumiLog())
+    dispatch(fetchHumiLog());
   }, [dispatch]);
 
-  const dataTemp = useSelector(tempLog)
+  const dataTemp = useSelector(tempLog);
   // console.log('dataTemp', dataTemp)
-  const dataHumi = useSelector(humiLog)
+  const dataHumi = useSelector(humiLog);
+
   const dataHumiFake = [
-    { room: 'Phòng 1', value: '44', updatedAt: '27/04/2023 12:45' },
-    { room: 'Phòng 1', value: '42', updatedAt: '27/04/2023 12:44' },
-    { room: 'Phòng 1', value: '43', updatedAt: '27/04/2023 12:43' },
-    { room: 'Phòng 1', value: '41', updatedAt: '27/04/2023 12:42' },
-  ]
+    { room: "Phòng 1", value: "44", updatedAt: "27/04/2023 12:45" },
+    { room: "Phòng 1", value: "42", updatedAt: "27/04/2023 12:44" },
+    { room: "Phòng 1", value: "43", updatedAt: "27/04/2023 12:43" },
+    { room: "Phòng 1", value: "41", updatedAt: "27/04/2023 12:42" },
+  ];
 
   // const check = device === 'temp' ? dataTemp : device === 'humi' ? dataHumi : []
   // console.log("checkType", check)
   const handleChange = (event) => {
-    setDevice(event.target.value)
+    setDevice(event.target.value);
   };
 
   //////function generate rowID because record have no primary key
@@ -137,22 +138,30 @@ const RecordSave = () => {
           <MenuItem value={"light"}>Ánh sáng</MenuItem>
         </Select>
       </FormControl>
-      <Box sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-        paddingInline: "10px",
-        "&.MuiDataGrid-virtualScroller ::-webkit-scrollbar": {
-          display: "none",
-        },
-      }}>
+      <Box
+        sx={{
+          height: 500,
+          width: "100%",
+          "& .actions": {
+            color: "text.secondary",
+          },
+          "& .textPrimary": {
+            color: "text.primary",
+          },
+          paddingInline: "10px",
+          "&.MuiDataGrid-virtualScroller ::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <DataGrid
-          rows={device === 'temp' ? dataTemp : device === 'humi' ? dataHumi : dataHumiFake}
+          rows={
+            device === "temp"
+              ? dataTemp
+              : device === "humi"
+              ? dataHumi
+              : dataHumiFake
+          }
           getRowId={generateRowId}
           columns={columns}
           hideScrollbar={true}

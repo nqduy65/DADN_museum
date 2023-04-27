@@ -1,9 +1,7 @@
 import { Box, Typography, Stack } from "@mui/material";
-import TempBox from "../TempBox";
-import HumiBox from "../HumiBox";
-import LightBox from "../LightBox";
+import PumpBox from "../PumpBox";
 
-const LightSection = () => {
+const PumpSection = () => {
   return (
     <Stack
       width={"100%"}
@@ -22,9 +20,9 @@ const LightSection = () => {
       >
         Sensor ánh sáng
       </Typography>
-      <LightBox />
+      <PumpBox />
     </Stack>
   );
 };
 
-export default LightSection;
+export default PumpSection;

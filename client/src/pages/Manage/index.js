@@ -4,6 +4,8 @@ import FanSection from "../../component/dManage/FanSection";
 import TempSection from "../../component/dManage/TempSection";
 import HumiSection from "../../component/dManage/HumiSection";
 import LightSection from "../../component/dManage/LightSection";
+import PumpSection from "../../component/dManage/PumpSection";
+import BurglarSection from "../../component/dManage/BurglarSection";
 
 const Manage = () => {
   return (
@@ -14,6 +16,10 @@ const Manage = () => {
         <TempSection />
         <HumiSection />
         <LightSection />
+      </Stack>
+      <Stack direction={"row"} gap={10}>
+        <PumpSection />
+        <BurglarSection />
       </Stack>
     </Stack>
   );

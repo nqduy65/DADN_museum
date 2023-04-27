@@ -2,8 +2,9 @@ import { Box, Typography, Stack } from "@mui/material";
 import TempBox from "../TempBox";
 import HumiBox from "../HumiBox";
 import LightBox from "../LightBox";
+import BurglarBox from "../BurglarBox";
 
-const LightSection = () => {
+const BurglarSection = () => {
   return (
     <Stack
       width={"100%"}
@@ -20,11 +21,11 @@ const LightSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Sensor ánh sáng
+        Sensor Chống trộm
       </Typography>
-      <LightBox />
+      <BurglarBox />
     </Stack>
   );
 };
 
-export default LightSection;
+export default BurglarSection;
