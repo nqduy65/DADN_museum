@@ -67,7 +67,7 @@ const RecordSave = () => {
   }, [dispatch]);
 
   const dataTemp = useSelector(tempLog)
-  console.log('dataTemp', dataTemp)
+  // console.log('dataTemp', dataTemp)
   const dataHumi = useSelector(humiLog)
   const dataHumiFake = [
     { room: 'Phòng 1', value: '44', updatedAt: '27/04/2023 12:45' },
@@ -76,8 +76,8 @@ const RecordSave = () => {
     { room: 'Phòng 1', value: '41', updatedAt: '27/04/2023 12:42' },
   ]
 
-  const check = device === 'temp' ? dataTemp : device === 'humi' ? dataHumi : []
-  console.log("checkType", check)
+  // const check = device === 'temp' ? dataTemp : device === 'humi' ? dataHumi : []
+  // console.log("checkType", check)
   const handleChange = (event) => {
     setDevice(event.target.value)
   };
