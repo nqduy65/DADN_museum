@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
 import CamSection from "../../component/dManage/CamSection";
 import FanSection from "../../component/dManage/FanSection";
-import TempBox from "../../component/dManage/TempBox";
 import TempSection from "../../component/dManage/TempSection";
 import HumiSection from "../../component/dManage/HumiSection";
+import LightSection from "../../component/dManage/LightSection";
 
 const Manage = () => {
   return (
@@ -13,6 +13,7 @@ const Manage = () => {
       <Stack direction={"row"} gap={10}>
         <TempSection />
         <HumiSection />
+        <LightSection />
       </Stack>
     </Stack>
   );

@@ -1,17 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import PropTypes from 'prop-types';
-import { GridRowModes, DataGridPro, GridToolbarContainer, GridActionsCellItem, GridAddIcon, GridSaveAltIcon } from '@mui/x-data-grid-pro';
-import { randomId } from '@mui/x-data-grid-generator';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import LinearProgress from "@mui/material/LinearProgress";
-// import { AddIcon, EditIcon, DeleteIcon } from '@mui/icons-material';
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CancelIcon from '@mui/icons-material/Close';
-import SaveIcon from '@mui/icons-material/Save';
-import { selectExhibit } from "./selectors";
+import React from "react";
 const style = {
   position: "relative",
   width: "100%",
@@ -22,6 +12,7 @@ const style = {
     display: "none",
   },
 };
+
 //Mockdata
 const columns = [
   { field: "id", headerName: "Mã hiện vật", width: 90, flex: 0.5 },
@@ -60,7 +51,8 @@ const columns = [
             color="primary"
             sx={{ minWidth: "30px" }}
             onClick={(event) => {
-              handleOnClickUpdate(event, cellValues);
+              console.log(event);
+              // handleOnClick(event, cellValues);
             }}
           >
             Sửa
@@ -70,7 +62,7 @@ const columns = [
             color="error"
             sx={{ minWidth: "30px" }}
             onClick={(event) => {
-              handleOnClickDelete(event, cellValues);
+              handleOnClick(event, cellValues);
             }}
           >
             Xóa
@@ -80,26 +72,34 @@ const columns = [
     },
   },
 ];
-const handleOnClickUpdate = (e) => {
-  console.log('update', e);
+
+const rows = [
+  { id: 1, exhibitName: "Tranh sơn dầu", room: "1", locate: "A" },
+  { id: 2, exhibitName: "Tranh phong thủy", room: "1", locate: "B" },
+  { id: 3, exhibitName: "Tranh đá", room: "1", locate: "C" },
+  { id: 4, exhibitName: "Tranh Monalisa", room: "1", locate: "D" },
+  { id: 5, exhibitName: "Tranh thủ", room: "1", locate: "D" },
+  { id: 6, exhibitName: "Tranh phong cảnh", room: "1", locate: "E" },
+  { id: 7, exhibitName: "Clifford", room: "1", locate: "G" },
+  { id: 8, exhibitName: "Frances", room: "1", locate: "H" },
+  { id: 9, exhibitName: "Roxie", room: "1", locate: "F" },
+  { id: 1, exhibitName: "Tranh sơn dầu", room: "1", locate: "A" },
+  { id: 2, exhibitName: "Tranh phong thủy", room: "1", locate: "B" },
+  { id: 3, exhibitName: "Tranh đá", room: "1", locate: "C" },
+  { id: 4, exhibitName: "Tranh Monalisa", room: "1", locate: "D" },
+  { id: 5, exhibitName: "Tranh thủ", room: "1", locate: "D" },
+  { id: 6, exhibitName: "Tranh phong cảnh", room: "1", locate: "E" },
+  { id: 7, exhibitName: "Clifford", room: "1", locate: "G" },
+  { id: 8, exhibitName: "Frances", room: "1", locate: "H" },
+  { id: 9, exhibitName: "Roxie", room: "1", locate: "F" },
+];
+
+const handleOnClick = () => {
+  console.log("button click");
 };
-const handleOnClickDelete = (e) => {
-  console.log('delete', e);
-};
-
-function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, exhibitName: '', room: '', locate: '' }]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-  };
-
+const exhibitManage = () => {
   return (
+<<<<<<< HEAD
     <GridToolbarContainer>
       <Button color="primary" startIcon={<GridAddIcon />} onClick={handleClick}>
         Thêm mới
@@ -234,6 +234,9 @@ export default function ExhibitManage() {
 
   return (
     <>
+=======
+    <div>
+>>>>>>> 100510c2a9295ff209e9226fccb845854fc351e5
       <Typography
         variant="h2"
         sx={{
@@ -256,6 +259,7 @@ export default function ExhibitManage() {
       >
         Quản lý hiện vật
       </Typography>
+<<<<<<< HEAD
       <Box
         sx={{
           height: 500,
@@ -287,6 +291,14 @@ export default function ExhibitManage() {
           slotProps={{
             toolbar: { setRows, setRowModesModel },
           }}
+=======
+      <Box sx={style}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          hideScrollbar={true}
+          loadIcon={<LinearProgress sx={{ backgroundColor: "#FF0000" }} />}
+>>>>>>> 100510c2a9295ff209e9226fccb845854fc351e5
           sx={{
             fontSize: "15px",
             boxShadow:
@@ -299,61 +311,12 @@ export default function ExhibitManage() {
           }}
         />
       </Box>
+<<<<<<< HEAD
     </>
+=======
+    </div>
+>>>>>>> 100510c2a9295ff209e9226fccb845854fc351e5
   );
-}
+};
 
-// const ExhibitManage = () => {
-//   // const dispatch = useDispatch();
-//   const exhibitList = useSelector(selectExhibit)
-
-
-
-
-//   return (
-//     <div>
-//       <Typography
-//         variant="h2"
-//         sx={{
-//           width: "100%",
-//           height: "85px",
-
-//           /* Nunito/Heading/24 - Bold */
-
-//           fontStyle: " normal;",
-//           fontWeight: 700,
-//           fontSize: "28px;",
-//           lineHeight: "140%;",
-//           /* identical to box height, or 34px */
-
-//           color: "#4B36CC",
-//           padding: "24px",
-
-//           /* Inside auto layout */
-//         }}
-//       >
-//         Quản lý hiện vật
-//       </Typography>
-//       <Box sx={style}>
-//         <DataGrid
-//           rows={exhibitList}
-//           columns={columns}
-//           hideScrollbar={true}
-//           loadIcon={<LinearProgress sx={{ backgroundColor: "#FF0000" }} />}
-//           sx={{
-//             fontSize: "15px",
-//             boxShadow:
-//               "0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);",
-//             borderRadius: "4px",
-//             "&.virtualScrollerContent": {
-//               color: "white",
-//             },
-//             backgroundColor: "white",
-//           }}
-//         />
-//       </Box>
-//     </div>
-//   );
-// };
-
-// export default ExhibitManage;
+export default exhibitManage;
