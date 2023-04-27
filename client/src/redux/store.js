@@ -3,6 +3,7 @@ import mainSlice from "../pages/Main/mainSlice";
 import dmanageSlice from "../pages/Manage/dmanage";
 import dashBoardSlice from "../pages/DashBroad/dashBroadSlice";
 import exhibitSlice  from "../pages/ExhibitManage/exhibitManageSlice";
+import recordSlice from "../pages/RecordSave/recordSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     dmanage: dmanageSlice.reducer,
     dashboard: dashBoardSlice.reducer,
     exhibit: exhibitSlice.reducer,
+    record: recordSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
