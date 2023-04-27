@@ -43,7 +43,7 @@ export const fetchTempLog = createAsyncThunk(
   async () => {
     const res = await API.getTempLog();
     // const resJson = await res.json()
-    // console.log('fetchtempLog',res.data.data)
+    console.log("fetchtempLog", res.data.data);
     return res.data.data;
   }
 );
@@ -53,7 +53,7 @@ export const fetchHumiLog = createAsyncThunk(
   async () => {
     const res = await API.getHumiLog();
     // const resJson = await res.json()s
-    // console.log('fetchHumiLog',res.data.data)
+    console.log("fetchHumiLog", res.data.data);
     return res.data.data;
   }
 );
