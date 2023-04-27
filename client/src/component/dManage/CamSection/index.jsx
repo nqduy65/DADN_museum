@@ -18,7 +18,7 @@ const CamSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Danh Sách camera
+        Camera
       </Typography>
       <Stack direction={"row"}>
         <CamBox />

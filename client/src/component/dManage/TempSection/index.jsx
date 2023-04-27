@@ -17,7 +17,7 @@ const TempSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Danh Sách sensor nhiệt
+        Sensor nhiệt
       </Typography>
       <TempBox />
     </Stack>

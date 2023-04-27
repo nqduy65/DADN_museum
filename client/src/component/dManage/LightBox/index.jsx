@@ -14,7 +14,7 @@ const LightBox = () => {
       .get(`https://io.adafruit.com/api/v2/Relax71/feeds/ttq-light/data/last`, {
         headers: {
           "Content-Type": "application/json",
-          "X-AIO-Key": `aio_JhjR92pgg4M70TZX2A4HgElskkIG`,
+          "X-AIO-Key": `aio_OucE008IMr60Q4wWMFXwyT2GibSR`,
         },
       })
       .then(({ data }) => {
