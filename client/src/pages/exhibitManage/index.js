@@ -215,14 +215,14 @@ export default function ExhibitManage() {
 
         return [
           <GridActionsCellItem
-            icon={<EditIcon />}
+            icon={<EditIcon sx={{ fontSize: 30 }} />}
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<DeleteIcon sx={{ fontSize: 30 }} />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
