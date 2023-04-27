@@ -4,9 +4,8 @@ const API = axios.create({ baseURL: "http://localhost:5000" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("userInfo")) {
-    req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("userInfo")).token
-    }`;
+    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userInfo")).token
+      }`;
   }
 
   return req;
@@ -36,6 +35,10 @@ export const getUserLog = () => API.get("api/data/getuserlog");
 export const setAutoFan = (value) => API.post("api/data/setAutoFan", value);
 export const getCharTempData = () => API.get("api/data/daytemperatures");
 export const getCharHumiData = () => API.get("api/data/dayhumidities");
+export const getTempLog = () => API.get("api/data/gettemplog")
+export const getHumiLog = () => API.get("api/data/gethumilog")
+// router.get("/gettemplog", verifyToken, dataController.getTempLog);
+// router.get("/gethumilog", verifyToken, dataController.getHumiLog);
 // export const getTemperature = () => API.get("/api/data/lasttemperature");
 
 // export const getHumidity = () => API.get("/api/data/lasthumidity");
