@@ -10,7 +10,7 @@ const store = configureStore({
     dmanage: dmanageSlice.reducer,
     dashboard: dashBoardSlice.reducer,
     exhibit: exhibitSlice.reducer,
-    // record: recordSlice.reducer,
+    record: recordSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
