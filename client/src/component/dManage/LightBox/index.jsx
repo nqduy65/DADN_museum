@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { ADAFRUIT_KEY } from "../../../env";
+
 const socket = io("http://localhost:8000");
+
 const LightBox = () => {
   const [data, setData] = useState();
   const fetchLight = async () => {
@@ -14,7 +17,7 @@ const LightBox = () => {
       .get(`https://io.adafruit.com/api/v2/Relax71/feeds/ttq-light/data/last`, {
         headers: {
           "Content-Type": "application/json",
-          "X-AIO-Key": `aio_OucE008IMr60Q4wWMFXwyT2GibSR`,
+          "X-AIO-Key": `${ADAFRUIT_KEY}`,
         },
       })
       .then(({ data }) => {
@@ -29,7 +32,7 @@ const LightBox = () => {
     fetchLight();
     socket.on("lightUpdate", ({ light }) => {
       console.log("haha");
-      toast(`Độ chiếu sáng thay đổi ${light} %`, "warning");
+      if ("") toast(`Độ chiếu sáng thay đổi ${light} %`, "warning");
       setData(parseInt(light));
     });
   }, []);
