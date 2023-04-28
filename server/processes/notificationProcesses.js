@@ -18,10 +18,9 @@ const listenEvents = (io) => {
   var last_update_temp = Date.now();
   var last_update_humi = Date.now();
   var last_update_fan = Date.now();
-  // var last_update_light = Date.now();
-  // var last_update_fan2 = Date.now();
+  var last_update_light = Date.now();
   // var last_update_pump = Date.now();
-  // var last_update_ct = Date.now();
+  var last_update_ct = Date.now();
   client.on("connect", () => {
     console.log("<Notification Processes> Client listen connect Events");
     /* client.subscribe(`${username}/feeds/temperature`);
@@ -31,6 +30,8 @@ const listenEvents = (io) => {
     client.subscribe(`${username}/feeds/ttq-autofan`);
     client.subscribe(`${username}/feeds/ttq-humi`);
     client.subscribe(`${username}/feeds/ttq-temp`);
+    client.subscribe(`${username}/feeds/ttq-light`);
+    client.subscribe(`${username}/feeds/ttq-tc`);
   });
   client.on("message", (topic, message) => {
     console.log(topic, JSON.parse(message.toString()));
@@ -97,38 +98,49 @@ const listenEvents = (io) => {
       }
       saveNotiOnDb("pump", mess, createAt);
       io.emit("newNotification", { message: mess, createdAt: createAt });
+    } else if (topic.endsWith("ttq-light")) {
+      last_update_light = createAt;
+    } else if (topic.endsWith("ttq-tc")) {
+      last_update_ct = createAt;
     }
   });
 
   function checkConnection() {
     // console.log(Date.now()-last_update_temp)
     let deviceCount = 0;
-    if (Date.now() - last_update_temp > 12000) {
+    if (Date.now() - last_update_temp > 1000 * 18) {
       console.log("Temp Disconnected");
     } else {
       deviceCount = deviceCount + 1;
       console.log("Temp Connected");
     }
-    if (Date.now() - last_update_humi > 12000) {
+    if (Date.now() - last_update_humi > 1000 * 18) {
       console.log("Humi Disconnected");
     } else {
       deviceCount = deviceCount + 1;
       console.log("Humi Connected");
     }
-    // if (Date.now() - last_update_light > 12000) {
-    //   console.log("Light Disconnected");
-    // } else {
-    //   console.log("Light Connected");
-    // }
-    if (Date.now() - last_update_fan > 12000) {
+    if (Date.now() - last_update_light > 1000 * 18) {
+      console.log("Light Disconnected");
+    } else {
+      console.log("Light Connected");
+    }
+    if (Date.now() - last_update_fan > 1000 * 18) {
       console.log("Fan Disconnected");
     } else {
       deviceCount = deviceCount + 1;
       console.log("Fan Connected");
     }
+    if (Date.now() - last_update_ct > 1000 * 18) {
+      console.log("Fan Disconnected");
+    } else {
+      deviceCount = deviceCount + 1;
+      console.log("Fan Connected");
+    }
+
     io.emit("deviceConnect", {
       deviceCount: deviceCount,
-      total: 3,
+      total: 5 - deviceCount,
     });
     // if (Date.now() - last_update_fan2 > 12000) {
     //   console.log("Fan 2 Disconnected");
@@ -173,7 +185,7 @@ const listenEvents = (io) => {
       });
   };
 
-  setInterval(checkConnection, 1000 * 60);
+  setInterval(checkConnection, 1000 * 22);
   setInterval(getLogDataTemp, 1000 * 60 * 60);
   setInterval(getLogDataHumi, 1000 * 60 * 60);
 };

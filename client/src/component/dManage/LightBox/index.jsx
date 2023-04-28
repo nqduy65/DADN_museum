@@ -32,7 +32,7 @@ const LightBox = () => {
     fetchLight();
     socket.on("lightUpdate", ({ light }) => {
       console.log("haha");
-      if ("") toast(`Độ chiếu sáng thay đổi ${light} %`, "warning");
+      if (light > 90) toast(`Độ chiếu sáng quá cao ${light} %`, "warning");
       setData(parseInt(light));
     });
   }, []);

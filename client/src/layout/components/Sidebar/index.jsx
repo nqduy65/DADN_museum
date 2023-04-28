@@ -200,7 +200,7 @@ const Sidebar = () => {
                   isCollasped={isCollasped}
                 />
                 <Item
-                  title="Đăng suất"
+                  title="Đăng xuất"
                   to="/login"
                   icon={<LogoutRoundedIcon sx={{ fontSize: "30px" }} />}
                   onClick={() => {

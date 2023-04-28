@@ -27,13 +27,13 @@ const initialState = {
       {
         id: "Hoạt động",
         label: "Hoạt động",
-        value: 9,
+        value: 0,
         color: "hsl(271, 70%, 50%)",
       },
       {
         id: "Không kết nối",
         label: "Không kết nối",
-        value: 1,
+        value: 0,
         color: "hsl(333, 70%, 50%)",
       },
     ],

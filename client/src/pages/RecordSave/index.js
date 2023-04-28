@@ -65,9 +65,10 @@ const RecordSave = () => {
     dispatch(fetchTempLog());
     dispatch(fetchHumiLog());
   }, [dispatch]);
-
+  useEffect(() => {
+    setDevice((prev) => prev);
+  }, [device]);
   const dataTemp = useSelector(tempLog);
-  // console.log('dataTemp', dataTemp)
   const dataHumi = useSelector(humiLog);
 
   const dataHumiFake = [

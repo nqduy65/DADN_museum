@@ -104,7 +104,6 @@ const PumpBox = () => {
     fetchPump();
     socket.on("lightUpdate", ({ light }) => {
       console.log("haha");
-      toast(`Độ chiếu sáng thay đổi ${light} %`, "warning");
       setData(parseInt(light));
     });
   }, []);

@@ -18,7 +18,7 @@ const PumpSection = () => {
         lineHeight={"140%"}
         color={"#006C7F"}
       >
-        Sensor ánh sáng
+        Sensor vòi nước
       </Typography>
       <PumpBox />
     </Stack>
