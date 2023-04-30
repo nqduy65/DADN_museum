@@ -31,7 +31,7 @@ const listenEvents = (io) => {
     client.subscribe(`${username}/feeds/ttq-humi`);
     client.subscribe(`${username}/feeds/ttq-temp`);
     client.subscribe(`${username}/feeds/ttq-light`);
-    client.subscribe(`${username}/feeds/ttq-ct`);
+    client.subscribe(`${username}/feeds/ttq-tc`);
   });
   client.on("message", (topic, message) => {
     console.log(topic, JSON.parse(message.toString()));
@@ -100,7 +100,7 @@ const listenEvents = (io) => {
       io.emit("newNotification", { message: mess, createdAt: createAt });
     } else if (topic.endsWith("ttq-light")) {
       last_update_light = createAt;
-    } else if (topic.endsWith("ttq-ct")) {
+    } else if (topic.endsWith("ttq-tc")) {
       last_update_ct = createAt;
     }
   });

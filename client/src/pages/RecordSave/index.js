@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { humiLog, tempLog } from "./selectors";
 import { fetchHumiLog, fetchTempLog } from "./recordSlice";
@@ -56,32 +56,39 @@ const columns = [
 ];
 
 const RecordSave = () => {
-  const [device, setDevice] = useState("temp");
-  console.log(device);
-  const dispatch = useDispatch();
+  const [device, setDevice] = useState("  ");
 
+  const dispatch = useDispatch();
   useEffect(() => {
     // eslint-disable-next-line
     dispatch(fetchTempLog());
     dispatch(fetchHumiLog());
-  }, [dispatch]);
-  useEffect(() => {
-    setDevice((prev) => prev);
-  }, [device]);
+  }, []);
   const dataTemp = useSelector(tempLog);
   const dataHumi = useSelector(humiLog);
+  const [rowData, setRowData] = useState([dataTemp]);
 
-  const dataHumiFake = [
-    { room: "Phòng 1", value: "44", updatedAt: "27/04/2023 12:45" },
-    { room: "Phòng 1", value: "42", updatedAt: "27/04/2023 12:44" },
-    { room: "Phòng 1", value: "43", updatedAt: "27/04/2023 12:43" },
-    { room: "Phòng 1", value: "41", updatedAt: "27/04/2023 12:42" },
-  ];
+  const onRowDataTemp = useCallback(() => {
+    setRowData(dataTemp);
+  }, [dataTemp]);
+
+  const onRowDataHumi = useCallback(() => {
+    setRowData(dataHumi);
+  }, [dataHumi]);
+  const onRowDataLight = useCallback(() => {
+    setRowData([]);
+  }, []);
 
   // const check = device === 'temp' ? dataTemp : device === 'humi' ? dataHumi : []
   // console.log("checkType", check)
   const handleChange = (event) => {
     setDevice(event.target.value);
+    event.target.value === "temp"
+      ? setRowData(dataTemp)
+      : event.target.value === "humi"
+      ? setRowData(dataHumi)
+      : onRowDataLight();
+    console.log("rowData", rowData);
   };
 
   //////function generate rowID because record have no primary key
@@ -156,13 +163,7 @@ const RecordSave = () => {
         }}
       >
         <DataGrid
-          rows={
-            device === "temp"
-              ? dataTemp
-              : device === "humi"
-              ? dataHumi
-              : dataHumiFake
-          }
+          rows={rowData}
           getRowId={generateRowId}
           columns={columns}
           hideScrollbar={true}

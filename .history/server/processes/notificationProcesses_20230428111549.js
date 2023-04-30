@@ -100,7 +100,7 @@ const listenEvents = (io) => {
       io.emit("newNotification", { message: mess, createdAt: createAt });
     } else if (topic.endsWith("ttq-light")) {
       last_update_light = createAt;
-    } else if (topic.endsWith("ttq-ct")) {
+    } else if (topic.endsWith("ttq-tc")) {
       last_update_ct = createAt;
     }
   });
